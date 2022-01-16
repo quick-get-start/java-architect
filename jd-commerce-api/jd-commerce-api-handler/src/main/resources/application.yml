@@ -4,6 +4,9 @@ server:
     uri-encoding: UTF-8
   max-http-header-size: 80KB
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
   datasource:
     type: com.zaxxer.hikari.HikariDataSource      # 数据源类型：HikariCP
     driver-class-name: com.mysql.cj.jdbc.Driver   # mysql驱动

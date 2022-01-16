@@ -16,7 +16,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>jd-commerce-api-common</module>
-        <module>jd-commerce-api-entity</module>
+        <module>jd-commerce-api-domain</module>
         <module>jd-commerce-api-repository</module>
         <module>jd-commerce-api-service</module>
         <module>jd-commerce-api-handler</module>

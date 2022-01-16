@@ -448,7 +448,7 @@ CREATE TABLE `items_comments` (
   `item_id` varchar(64) NOT NULL COMMENT '商品id',
   `item_name` varchar(64) DEFAULT NULL COMMENT '商品名称',
   `item_spec_id` varchar(64) DEFAULT NULL COMMENT '商品规格id 可为空',
-  `sepc_name` varchar(32) DEFAULT NULL COMMENT '规格名称 可为空',
+  `spec_name` varchar(32) DEFAULT NULL COMMENT '规格名称 可为空',
   `comment_level` int(11) NOT NULL COMMENT '评价等级 1：好评 2：中评 3：差评',
   `content` varchar(128) NOT NULL COMMENT '评价内容',
   `created_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -865,7 +865,7 @@ DROP TABLE IF EXISTS `items_param`;
 CREATE TABLE `items_param` (
   `id` varchar(64) NOT NULL COMMENT '商品参数id',
   `item_id` varchar(32) NOT NULL COMMENT '商品外键id',
-  `produc_place` varchar(32) NOT NULL COMMENT '产地 产地，例：中国江苏',
+  `produce_place` varchar(32) NOT NULL COMMENT '产地 产地，例：中国江苏',
   `foot_period` varchar(32) NOT NULL COMMENT '保质期 保质期，例：180天',
   `brand` varchar(32) NOT NULL COMMENT '品牌名 品牌名，例：三只大灰狼',
   `factory_name` varchar(32) NOT NULL COMMENT '生产厂名 生产厂名，例：大灰狼工厂',
@@ -1740,7 +1740,7 @@ CREATE TABLE `orders` (
   `post_amount` int(11) NOT NULL COMMENT '邮费;默认可以为零，代表包邮',
   `pay_method` int(11) NOT NULL COMMENT '支付方式',
   `left_msg` varchar(128) DEFAULT NULL COMMENT '买家留言',
-  `extand` varchar(32) DEFAULT NULL COMMENT '扩展字段',
+  `extend` varchar(32) DEFAULT NULL COMMENT '扩展字段',
   `is_comment` int(11) NOT NULL COMMENT '买家是否评价;1：已评价，0：未评价',
   `is_delete` int(11) NOT NULL COMMENT '逻辑删除状态;1: 删除 0:未删除',
   `created_time` datetime NOT NULL COMMENT '创建时间（成交时间）',
@@ -1781,27 +1781,6 @@ INSERT INTO `orders` VALUES ('190830BZ5B5R7KWH', '1908189H7TNWDTXP', 'jack', '13
 COMMIT;
 
 -- ----------------------------
--- Table structure for stu
--- ----------------------------
-DROP TABLE IF EXISTS `stu`;
-CREATE TABLE `stu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `age` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1221 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of stu
--- ----------------------------
-BEGIN;
-INSERT INTO `stu` VALUES (1203, 'parent', 19);
-INSERT INTO `stu` VALUES (1205, 'parent', 19);
-INSERT INTO `stu` VALUES (1209, 'parent', 19);
-INSERT INTO `stu` VALUES (1211, 'parent', 19);
-COMMIT;
-
--- ----------------------------
 -- Table structure for user_address
 -- ----------------------------
 DROP TABLE IF EXISTS `user_address`;
@@ -1814,7 +1793,7 @@ CREATE TABLE `user_address` (
   `city` varchar(32) NOT NULL COMMENT '城市',
   `district` varchar(32) NOT NULL COMMENT '区县',
   `detail` varchar(128) NOT NULL COMMENT '详细地址',
-  `extand` varchar(128) DEFAULT NULL COMMENT '扩展字段',
+  `extend` varchar(128) DEFAULT NULL COMMENT '扩展字段',
   `is_default` int(11) DEFAULT NULL COMMENT '是否默认地址',
   `created_time` datetime NOT NULL COMMENT '创建时间',
   `updated_time` datetime NOT NULL COMMENT '更新时间',
