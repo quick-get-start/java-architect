@@ -2,12 +2,13 @@ package com.start.quick.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Date;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Users {
     /**
      * 主键id 用户id
@@ -58,18 +59,21 @@ public class Users {
     /**
      * 生日
      */
-    private Date birthday;
+    @Column(columnDefinition = "DATE")
+    private Calendar birthday;
 
     /**
      * 创建时间
      */
     @CreatedDate
+    @Column(columnDefinition = "DATETIME")
     private Calendar createTime;
 
     /**
      * 更新时间
      */
     @LastModifiedDate
+    @Column(columnDefinition = "DATETIME")
     private Calendar updateTime;
 
     public String getId() {
@@ -144,11 +148,11 @@ public class Users {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+    public Calendar getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(Calendar birthday) {
         this.birthday = birthday;
     }
 
