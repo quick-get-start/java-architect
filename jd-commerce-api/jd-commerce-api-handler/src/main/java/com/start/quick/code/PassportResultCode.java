@@ -21,4 +21,9 @@ public class PassportResultCode extends ResultCode {
      * 两次输入密码不一致
      */
     public static final Integer PASSWORD_NOT_MATCH = 3;
+
+    /**
+     * 用户名或密码不正确
+     */
+    public static final Integer WRONG_USERNAME_PASSWORD = 4;
 }

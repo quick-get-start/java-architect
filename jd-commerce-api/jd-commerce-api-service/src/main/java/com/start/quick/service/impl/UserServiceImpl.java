@@ -5,13 +5,13 @@ import com.start.quick.enums.Sex;
 import com.start.quick.model.UserModel;
 import com.start.quick.repository.UserRepository;
 import com.start.quick.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -45,5 +45,15 @@ public class UserServiceImpl implements UserService {
         user.setBirthday(Calendar.getInstance());
         user.setSex(Sex.SECRET);
         return this.userRepository.save(user);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Users checkLoginInfo(String username, String password) {
+        Users user = this.userRepository.findByUsername(username);
+        if (user != null && this.passwordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
+        return null;
     }
 }

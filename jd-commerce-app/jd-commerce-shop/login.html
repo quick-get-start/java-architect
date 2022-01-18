@@ -14,8 +14,8 @@
 
 	<link rel="stylesheet" href="AmazeUI-2.4.2/assets/css/amazeui.css" />
 	<link href="css/dlstyle.css" rel="stylesheet" type="text/css">
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.min.js"></script>
 </head>
 
 <body>
@@ -116,7 +116,6 @@
 						username: this.username,
 						password: this.password
 					};
-					// console.log(userBO);
 
 					var serverUrl = app.serverUrl;
 
@@ -126,18 +125,14 @@
 					// console.log(axios.defaults);
 					axios.post(serverUrl + '/passport/login', userBO)
 						.then(res => {
-							if (res.data.status == 200) {
-								var user = res.data;
-								// console.log(user);
-
-								// window.location.href = app.ctx + "/index.html";
+							if (res.data.code == 0) {
 								if (returnUrl != null && returnUrl != undefined && returnUrl != '') {
 									window.location.href = returnUrl;
 								} else {
 									window.location.href = "index.html";
 								}
 
-							} else if (res.data.status == 500) {
+							} else if (res.data.code == 4) {
 								alert(res.data.msg);
 								return;
 							}

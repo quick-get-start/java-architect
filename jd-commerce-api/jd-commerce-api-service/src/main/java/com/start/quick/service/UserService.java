@@ -8,4 +8,6 @@ public interface UserService {
     boolean existsByUsername(String username);
 
     Users save(UserModel userModel);
+
+    Users checkLoginInfo(String username, String password);
 }

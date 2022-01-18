@@ -3,6 +3,7 @@ package com.start.quick.controller;
 import com.start.quick.code.PassportResultCode;
 import com.start.quick.common.JSONResult;
 import com.start.quick.entity.Users;
+import com.start.quick.http.PassportLoginRequest;
 import com.start.quick.http.PassportRegisterRequest;
 import com.start.quick.model.UserModel;
 import com.start.quick.service.UserService;
@@ -67,5 +68,23 @@ public class PassportController {
         Users result = this.userService.save(userModel);
 
         return JSONResult.ok("注册成功", result);
+    }
+
+    @PostMapping("login")
+    public JSONResult<Users> login(@RequestBody PassportLoginRequest loginInfo) {
+        String username = loginInfo.getUsername();
+        String password = loginInfo.getPassword();
+
+        if (StringUtils.isBlank(username)
+                || StringUtils.isBlank(password)) {
+            return JSONResult.build(PassportResultCode.INVALID_REQUEST_PARAM, "用户名或密码不能为空");
+        }
+
+        Users user = this.userService.checkLoginInfo(username, password);
+        if (user == null) {
+            return JSONResult.build(PassportResultCode.WRONG_USERNAME_PASSWORD, "用户名或密码不正确");
+        }
+
+        return JSONResult.ok("登录成功", user);
     }
 }
