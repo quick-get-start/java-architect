@@ -2,6 +2,8 @@ package com.start.quick.http;
 
 public class UserCommonResponse {
 
+    private String id;
+
     /**
      * 用户名
      */
@@ -26,6 +28,14 @@ public class UserCommonResponse {
      * 性别 0:女 1:男 2:保密
      */
     private Integer sex;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;

@@ -99,8 +99,21 @@ public class PassportController {
         return JSONResult.ok("登录成功", result);
     }
 
+    @PostMapping("logout")
+    public JSONResult<Void> logout(@RequestParam String userId,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
+        CookieUtils.deleteCookie(request, response, "user");
+
+        // TODO 清空购物车
+        // TODO 分布式会话中需要清楚用户数据
+
+        return JSONResult.ok("注销成功");
+    }
+
     private UserCommonResponse userToResponse(Users user) {
         UserCommonResponse response = new UserCommonResponse();
+        response.setId(user.getId());
         response.setUsername(user.getUsername());
         response.setNickName(user.getNickName());
         response.setRealName(user.getRealName());

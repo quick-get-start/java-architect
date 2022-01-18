@@ -639,9 +639,9 @@
 					axios.defaults.withCredentials = true;
 					axios.post(serverUrl + '/passport/logout?userId=' + userId, {})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								window.location.href = "index.html";
-							} else if (res.data.status == 500) {
+							} else {
 								alert(res.data.msg);
 								return;
 							}
