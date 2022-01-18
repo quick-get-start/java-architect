@@ -15,8 +15,8 @@
 		<link href="css/dlstyle.css" rel="stylesheet" type="text/css">
 		<script src="AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.9/dist/vue.js"></script>
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.min.js"></script>
 	</head>
 
 	<body>
@@ -123,13 +123,13 @@
 						var serverUrl = app.serverUrl;
 						var username = this.username;
 						// console.log(this.username);
-						axios.get(serverUrl + '/passport/usernameIsExist?username=' + username, {})
+						axios.get(serverUrl + '/passport/existsByUsername?username=' + username, {})
 							.then(res => {
-								if (res.data.status == 200) {
+								if (res.data.code == 0) {
 									this.errUsername = null;
 									this.errUsernameIsShow = false;
 									return;
-								} else if (res.data.status == 500) {
+								} else if (res.data.code == 1) {
 									this.errUsername = res.data.msg;
 									this.errUsernameIsShow = true;
 									return;
@@ -142,9 +142,6 @@
 					},
 					postRequest() {							
 					},
-					// usernameIsExist() {
-					// 	console.log(this.username);
-					// },
 					registUser() {
 
 						if (this.username == null || this.username == undefined || this.username =='') {
@@ -176,21 +173,15 @@
 						// form提交
 						axios.defaults.withCredentials = true;
 						// console.log(axios.defaults);
-						axios.post(serverUrl + '/passport/regist', userBO)
+						axios.post(serverUrl + '/passport/register', userBO)
 							.then(res => {
-								if (res.data.status == 200) {
-									var user = res.data;
-									// console.log(user);
-									// window.location.href = app.ctx + "/index.html";
-									// window.location.href = "index.html";
-
+								if (res.data.code == 0) {
 									if (returnUrl != null && returnUrl != undefined && returnUrl != '') {
 										window.location.href = returnUrl;
 									} else {
 										window.location.href = "index.html";
 									}
-
-								} else if (res.data.status == 500) {
+								} else {
 									alert(res.data.msg);
 									return;
 								}
