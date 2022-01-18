@@ -5,10 +5,16 @@ import com.start.quick.common.JSONResult;
 import com.start.quick.entity.Users;
 import com.start.quick.http.PassportLoginRequest;
 import com.start.quick.http.PassportRegisterRequest;
+import com.start.quick.http.UserCommonResponse;
 import com.start.quick.model.UserModel;
 import com.start.quick.service.UserService;
+import com.start.quick.utils.CookieUtils;
+import com.start.quick.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 通行证控制器
@@ -38,7 +44,7 @@ public class PassportController {
     }
 
     @PostMapping("register")
-    public JSONResult<Users> register(@RequestBody PassportRegisterRequest registerInfo) {
+    public JSONResult<UserCommonResponse> register(@RequestBody PassportRegisterRequest registerInfo) {
         String username = registerInfo.getUsername();
         String password = registerInfo.getPassword();
         String confirmPassword = registerInfo.getConfirmPassword();
@@ -65,13 +71,15 @@ public class PassportController {
         UserModel userModel = new UserModel();
         userModel.setUsername(username);
         userModel.setPassword(password);
-        Users result = this.userService.save(userModel);
+        Users user = this.userService.save(userModel);
 
-        return JSONResult.ok("注册成功", result);
+        return JSONResult.ok("注册成功", userToResponse(user));
     }
 
     @PostMapping("login")
-    public JSONResult<Users> login(@RequestBody PassportLoginRequest loginInfo) {
+    public JSONResult<UserCommonResponse> login(@RequestBody PassportLoginRequest loginInfo,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
         String username = loginInfo.getUsername();
         String password = loginInfo.getPassword();
 
@@ -85,6 +93,19 @@ public class PassportController {
             return JSONResult.build(PassportResultCode.WRONG_USERNAME_PASSWORD, "用户名或密码不正确");
         }
 
-        return JSONResult.ok("登录成功", user);
+        UserCommonResponse result = userToResponse(user);
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(result), true);
+
+        return JSONResult.ok("登录成功", result);
+    }
+
+    private UserCommonResponse userToResponse(Users user) {
+        UserCommonResponse response = new UserCommonResponse();
+        response.setUsername(user.getUsername());
+        response.setNickName(user.getNickName());
+        response.setRealName(user.getRealName());
+        response.setAvatar(user.getAvatar());
+        response.setSex(user.getSex());
+        return response;
     }
 }

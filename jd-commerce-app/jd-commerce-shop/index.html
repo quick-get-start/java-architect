@@ -270,12 +270,12 @@
 					<div class="ibar_login_box status_login " style="height: 150px">
 						<div class="avatar_box ">
 							<p class="avatar_imgbox ">
-								<img v-show="userIsLogin" :src="userInfo.face"/>
+								<img v-show="userIsLogin" :src="userInfo.avatar"/>
 								<img v-show="!userIsLogin" src="img/default-face.png"/>
 							</p>
 							<ul class="user_info ">
 								<li v-show="!userIsLogin">用户未登录</li>
-								<li v-show="userIsLogin">用户昵称：{{userInfo.nickname}}</li>
+								<li v-show="userIsLogin">用户昵称：{{userInfo.nick_name}}</li>
 								<li v-show="userIsLogin" @click="logout">退出登录</li>
 							</ul>
 						</div>
