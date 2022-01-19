@@ -2,8 +2,10 @@ package com.start.quick.controller;
 
 import com.start.quick.common.JSONResult;
 import com.start.quick.entity.Carousel;
+import com.start.quick.entity.Category;
 import com.start.quick.enums.YesOrNo;
 import com.start.quick.service.CarouselService;
+import com.start.quick.service.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,14 +17,22 @@ import java.util.List;
 public class IndexController {
 
     private final CarouselService carouselService;
+    private final CategoryService categoryService;
 
-    public IndexController(CarouselService carouselService) {
+    public IndexController(CarouselService carouselService, CategoryService categoryService) {
         this.carouselService = carouselService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("carousel")
     public JSONResult<List<Carousel>> carousel() {
         List<Carousel> carousels = this.carouselService.findAll(YesOrNo.YES);
         return JSONResult.ok("查询轮播图成功", carousels);
+    }
+
+    @GetMapping("categories")
+    public JSONResult<List<Category>> categories() {
+        List<Category> categories = this.categoryService.findAllRootCategories();
+        return JSONResult.ok("查询一级分类成功", categories);
     }
 }

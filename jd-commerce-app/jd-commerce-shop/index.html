@@ -25,11 +25,7 @@
 
 <body>
 
-<div class="attention">本电商购物平台为慕课网演示网站，仅供学习和交流。所有交易金额均为0.01元，并且不会真实发货！</div>
-
-<!-- <div id="index" @scroll="handleScroll"> -->
 <div id="index">
-
 	<div class="hmtop">
 		<!--顶部导航条 -->
 		<div class="am-container header">
@@ -57,9 +53,8 @@
 
 		<!--悬浮搜索框-->
 		<div class="nav white">
-			<!-- <div class="logo"><img src="images/logo.png" /></div> -->
 			<div class="logoBig">
-				<li><img src="images/logobig.png" /></li>
+				<li><img src="images/logo.gif" /></li>
 			</div>
 			<div class="search-bar pr">
 				<a name="index_none_header_sysc" href="#"></a>
@@ -73,7 +68,7 @@
 		<div class="clear"></div>
 	</div>
 	<div id="index444">
-		<div class="banner" style="top: 213px;">
+		<div class="banner" style="top: 178px;">
 			<!--轮播 -->
 			<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
 				<ul class="am-slides">
@@ -84,15 +79,6 @@
 		</div>
 		<div class="shopNav">
 			<div class="slideall">
-
-				<div class="long-title"><span class="all-goods">全部分类</span></div>
-				<div class="nav-cont">
-					<ul>
-						<li class="index"><a href="index.html">首页</a></li>
-						<li class="qc"><a href="https://www.imooc.com" target="_blank">慕课网</a></li>
-					</ul>
-				</div>
-
 				<!--侧边导航 -->
 				<div id="nav" class="navfull">
 					<div class="area clearfix">
@@ -112,61 +98,8 @@
 
 	<div class="shopMainbg">
 		<div class="shopMain" id="shopmain">
-
-			<div class="am-g am-g-fixed recommendation">
-				<div class="clock am-u-sm-3">
-					<img src="course/2019.png" style="margin-top: 36px;"></img>
-					<p style="font-weight: bold;">实战<br>推荐</p>
-				</div>
-
-				<div class="am-u-sm-4 am-u-lg-3 ">
-					<div class="info ">
-						<h3>分布式架构实战</h3>
-						<h4>SpringBoot仿抖音</h4>
-					</div>
-					<div class="recommendationMain one">
-						<a href="https://coding.imooc.com/class/217.html" target="_blank">
-							<img src="course/douyin.jpg"></img>
-						</a>
-					</div>
-				</div>
-				<div class="am-u-sm-4 am-u-lg-3 ">
-					<div class="info ">
-						<h3>Netty聊天实战</h3>
-						<h4>SpringBoot仿微信</h4>
-					</div>
-					<div class="recommendationMain two">
-						<a href="https://coding.imooc.com/class/261.html" target="_blank">
-							<img src="course/weixin.jpg"></img>
-						</a>
-					</div>
-				</div>
-				<div class="am-u-sm-4 am-u-lg-3 ">
-					<div class="info ">
-						<h3>分布式协调中间件</h3>
-						<h4>Zookeeper入门</h4>
-					</div>
-					<div class="recommendationMain three">
-						<a href="https://coding.imooc.com/class/201.html" target="_blank">
-							<img src="course/zk.jpg"></img>
-						</a>
-					</div>
-				</div>
-				<!-- <div class="am-u-sm-4 am-u-lg-3 ">
-							<div class="info ">
-								<h3>支付宝小程序</h3>
-								<h4>移动端电商实战</h4>
-							</div>
-							<div class="recommendationMain four">
-								<a href="https://coding.imooc.com/class/293.html" target="_blank">
-									<img src="course/alipay.jpg"></img>
-								</a>
-							</div>
-						</div> -->
-			</div>
-			<div class="clear "></div>
-			<!--热门活动 -->
-
+			<div class="clear"></div>
+			<!-- 热门活动 -->
 			<div v-for="(rootCat, rootIndex) in sixNewItemsList">
 				<!--甜点-->
 				<div class="am-container ">
@@ -233,28 +166,6 @@
 				</div>
 				<div class="clear "></div>
 			</div>
-			
-			<div class="footer ">
-				<div class="footer-hd ">
-					<p>
-						<a href="https://www.imooc.com/" target="_blank">慕课网</a>
-						<b>|</b>
-						<a href="https://coding.imooc.com/class/217.html" target="_blank">分布式架构仿抖音短视频</a>
-						<b>|</b>
-						<a href="https://coding.imooc.com/class/261.html" target="_blank">Netty仿微信聊天</a>
-						<b>|</b>
-						<a href="https://coding.imooc.com/class/201.html" target="_blank">Zookeeper与dubbo入门</a>
-						<b>|</b>
-						<a href="https://coding.imooc.com/class/293.html" target="_blank">支付宝小程序</a>
-					</p>
-				</div>
-				<div class="footer-bd ">
-					<p>
-						<em>© 2019 imooc.com 京ICP备12003892号-11 北京奥鹏文化传媒有限公司 版权所有</em>
-					</p>
-				</div>
-			</div>
-
 		</div>
 	</div>
 
@@ -497,10 +408,10 @@
 
 					// 获得商品分类 - 大分类
 					axios.get(
-							serverUrl + '/index/cats', {})
+							serverUrl + '/index/categories', {})
 						.then(res => {
 							
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var categoryList = res.data.data
 								this.categoryList = categoryList;
 
@@ -583,38 +494,6 @@
 													}
 												});
 										}
-										// var renderHtml = '' 
-										// 	+ '<dl class="dl-sort">'
-										// 		+ '<dt><span title="大包装">大包装</span></dt>'
-										// 		+ '<dd><a title="蒸蛋糕" href="#"><span>蒸蛋糕</span></a></dd>'
-										// 		+ '<dd><a title="脱水蛋糕" href="#"><span>脱水蛋糕</span></a></dd>'
-										// 		+ '<dd><a title="瑞士卷" href="#"><span>瑞士卷</span></a></dd>'
-										// 		+ '<dd><a title="软面包" href="#"><span>软面包</span></a></dd>'
-										// 		+ '<dd><a title="马卡龙" href="#"><span>马卡龙</span></a></dd>'
-										// 		+ '<dd><a title="千层饼" href="#"><span>千层饼</span></a></dd>'
-										// 		+ '<dd><a title="甜甜圈" href="#"><span>甜甜圈</span></a></dd>'
-										// 		+ '<dd><a title="蒸三明治" href="#"><span>蒸三明治</span></a></dd>'
-										// 		+ '<dd><a title="铜锣烧" href="#"><span>铜锣烧</span></a></dd>'
-										// 	+ '</dl>'
-										// 	+ '<dl class="dl-sort">'
-										// 		+ '<dt><span title="两件套">两件套</span></dt>'
-										// 		+ '<dd><a title="蒸蛋糕" href="#"><span>蒸蛋糕</span></a></dd>'
-										// 		+ '<dd><a title="脱水蛋糕" href="#"><span>脱水蛋糕</span></a></dd>'
-										// 		+ '<dd><a title="瑞士卷" href="#"><span>瑞士卷</span></a></dd>'
-										// 		+ '<dd><a title="软面包" href="#"><span>软面包</span></a></dd>'
-										// 		+ '<dd><a title="马卡龙" href="#"><span>马卡龙</span></a></dd>'
-										// 		+ '<dd><a title="千层饼" href="#"><span>千层饼</span></a></dd>'
-										// 		+ '<dd><a title="甜甜圈" href="#"><span>甜甜圈</span></a></dd>'
-										// 		+ '<dd><a title="蒸三明治" href="#"><span>蒸三明治</span></a></dd>'
-										// 		+ '<dd><a title="铜锣烧" href="#"><span>铜锣烧</span></a></dd>'
-										// 	+ '</dl>';
-										// 	$(this)
-										// 		.children("div.menu-in")
-										// 		.children("div.area-in")
-										// 		.children("div.area-bg")
-										// 		.children("div.menu-srot")
-										// 		.children("div.sort-side")
-										// 		.html(renderHtml);
 									} else {
 										$(this).addClass("hover");
 										$(this).children("div.menu-in").css("display", "block");
