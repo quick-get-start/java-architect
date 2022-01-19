@@ -462,12 +462,10 @@
 										if (rootCatId != undefined && rootCatId != null && rootCatId != '') {
 											// 根据root分类id查询该分类下的所有子分类
 											axios.get(
-													serverUrl + '/index/subCat/' + rootCatId, {})
+													serverUrl + '/index/subCategories/' + rootCatId, {})
 												.then(res => {
-													if (res.data.status == 200) {
+													if (res.data.code == 0) {
 														var catList = res.data.data
-														// this.catList = catList;
-														// debugger;
 														var subRenderHtml = '';
 														for (var i = 0; i < catList.length; i++) {
 															var cat = catList[i];
@@ -477,12 +475,12 @@
 																cat.name + '</span></dt>';
 
 															// 拼接第三级分类
-															var subCatList = cat.subCatList;
+															var subCatList = cat.subCategories;
 															for (var j = 0; j < subCatList.length; j++) {
 																var subCat = subCatList[j];
 																subRenderHtml += '<dd><a title="' + subCat
-																	.subName + '" href="catItems.html?searchType=catItems&catId='+ subCat.subId +'" target="_blank"><span>' +
-																	subCat.subName + '</span></a></dd>'
+																	.name + '" href="catItems.html?searchType=catItems&catId='+ subCat.id +'" target="_blank"><span>' +
+																	subCat.name + '</span></a></dd>'
 															}
 
 															subRenderHtml += '</dl>';
@@ -498,9 +496,6 @@
 										$(this).addClass("hover");
 										$(this).children("div.menu-in").css("display", "block");
 									}
-
-									// $(this).addClass("hover");
-									// $(this).children("div.menu-in").css("display", "block")
 								}, function () {
 									$(this).removeClass("hover")
 									$(this).children("div.menu-in").css("display", "none")

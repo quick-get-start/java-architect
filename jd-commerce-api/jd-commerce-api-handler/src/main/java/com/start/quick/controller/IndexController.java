@@ -1,12 +1,15 @@
 package com.start.quick.controller;
 
+import com.start.quick.code.CategoryResultCode;
 import com.start.quick.common.JSONResult;
 import com.start.quick.entity.Carousel;
 import com.start.quick.entity.Category;
 import com.start.quick.enums.YesOrNo;
+import com.start.quick.model.SubCategoryModel;
 import com.start.quick.service.CarouselService;
 import com.start.quick.service.CategoryService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +37,15 @@ public class IndexController {
     public JSONResult<List<Category>> categories() {
         List<Category> categories = this.categoryService.findAllRootCategories();
         return JSONResult.ok("查询一级分类成功", categories);
+    }
+
+    @GetMapping("subCategories/{rootId}")
+    public JSONResult<List<SubCategoryModel>> subCategories(@PathVariable Integer rootId) {
+        if (rootId == null) {
+            return JSONResult.build(CategoryResultCode.INVALID_REQUEST_PARAM, "分类不存在");
+        }
+
+        List<SubCategoryModel> subCategories = this.categoryService.findAllSubCategoriesByRootId(rootId);
+        return JSONResult.ok("查询子分类成功", subCategories);
     }
 }

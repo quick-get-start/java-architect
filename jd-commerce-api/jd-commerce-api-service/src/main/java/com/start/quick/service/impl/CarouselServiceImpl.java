@@ -5,6 +5,8 @@ import com.start.quick.repository.CarouselRepository;
 import com.start.quick.service.CarouselService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class CarouselServiceImpl implements CarouselService {
         this.carouselRepository = carouselRepository;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public List<Carousel> findAll(Integer isShow) {
         Sort sort = Sort.by(Sort.Direction.DESC, "sort");
