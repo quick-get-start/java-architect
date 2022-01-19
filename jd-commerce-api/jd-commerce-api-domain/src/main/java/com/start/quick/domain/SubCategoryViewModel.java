@@ -21,6 +21,9 @@ public class SubCategoryViewModel {
 
     private Integer subFatherId;
 
+    public SubCategoryViewModel() {
+    }
+
     public SubCategoryViewModel(Integer id, String name, Integer type, Integer fatherId, Integer subId, String subName, Integer subType, Integer subFatherId) {
         this.id = id;
         this.name = name;

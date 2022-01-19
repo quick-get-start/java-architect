@@ -5,6 +5,7 @@ import com.start.quick.common.JSONResult;
 import com.start.quick.entity.Carousel;
 import com.start.quick.entity.Category;
 import com.start.quick.enums.YesOrNo;
+import com.start.quick.model.CategoryItemsModel;
 import com.start.quick.model.SubCategoryModel;
 import com.start.quick.service.CarouselService;
 import com.start.quick.service.CategoryService;
@@ -47,5 +48,15 @@ public class IndexController {
 
         List<SubCategoryModel> subCategories = this.categoryService.findAllSubCategoriesByRootId(rootId);
         return JSONResult.ok("查询子分类成功", subCategories);
+    }
+
+    @GetMapping("freshCategoryItems/{rootId}")
+    public JSONResult<List<CategoryItemsModel>> freshCategoryItems(@PathVariable Integer rootId) {
+        if (rootId == null) {
+            return JSONResult.build(CategoryResultCode.INVALID_REQUEST_PARAM, "分类不存在");
+        }
+
+        List<CategoryItemsModel> categories = this.categoryService.findFreshItemsByCategoryId(rootId);
+        return JSONResult.ok("查询最新商品成功", categories);
     }
 }
