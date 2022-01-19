@@ -26,7 +26,7 @@
 <body>
 
 <div id="index">
-	<div class="hmtop">
+	<div class="hmtop" style="background-color: #E3E4E5;">
 		<!--顶部导航条 -->
 		<div class="am-container header">
 			<ul class="message-l">
@@ -36,21 +36,26 @@
 						<a href="register.html" target="_top">免费注册</a>
 					</div>
 					<div class="menu-hd" v-show="userIsLogin">
-						<span style="color: #d2364c">欢迎，{{userInfo.username}}</span>
+						<span style="color: #F10215">欢迎，{{userInfo.username}}</span>
 					</div>
 				</div>
 			</ul>
 			<ul class="message-r">
 				<div class="topMessage home">
-					<div class="menu-hd"><a href="index.html" target="_top" class="h">商城首页</a></div>
+					<div class="menu-hd">
+						<a style="color: #999" href="index.html" target="_top" class="h">商城首页</a>
+					</div>
 				</div>
 				<div class="topMessage my-shangcheng">
-					<div class="menu-hd MyShangcheng"><a href="javascript:void(0);" @click="goUserCenter">
-						<i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+					<div class="menu-hd MyShangcheng">
+						<a style="color: #999" href="javascript:void(0);" @click="goUserCenter">
+						<i class="am-icon-user am-icon-fw"></i>个人中心</a>
+					</div>
 				</div>
 			</ul>
 		</div>
-
+	</div>
+	<div class="hmtop">
 		<!--悬浮搜索框-->
 		<div class="nav white">
 			<div class="logoBig">
