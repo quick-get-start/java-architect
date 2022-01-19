@@ -38,7 +38,7 @@ public class Category {
     /**
      * 分类图
      */
-    private String catImage;
+    private String categoryImage;
 
     /**
      * 背景颜色
@@ -93,12 +93,12 @@ public class Category {
         this.slogan = slogan;
     }
 
-    public String getCatImage() {
-        return catImage;
+    public String getCategoryImage() {
+        return categoryImage;
     }
 
-    public void setCatImage(String catImage) {
-        this.catImage = catImage;
+    public void setCategoryImage(String categoryImage) {
+        this.categoryImage = categoryImage;
     }
 
     public String getBgColor() {

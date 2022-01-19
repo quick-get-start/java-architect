@@ -40,7 +40,7 @@ CREATE TABLE `category` (
   `father_id` int(11) NOT NULL COMMENT '父id',
   `logo` varchar(64) DEFAULT NULL COMMENT '图标',
   `slogan` varchar(64) DEFAULT NULL COMMENT '口号',
-  `cat_image` varchar(64) DEFAULT NULL COMMENT '分类图',
+  `category_image` varchar(64) DEFAULT NULL COMMENT '分类图',
   `bg_color` varchar(32) DEFAULT NULL COMMENT '背景颜色',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类 ';
