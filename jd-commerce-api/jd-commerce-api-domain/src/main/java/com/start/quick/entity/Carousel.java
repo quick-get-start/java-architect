@@ -1,6 +1,10 @@
 package com.start.quick.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -13,7 +17,7 @@ public class Carousel {
     private String id;
 
     /**
-     * 图片 图片地址
+     * 图片地址
      */
     private String imageUrl;
 
@@ -23,14 +27,14 @@ public class Carousel {
     private String backgroundColor;
 
     /**
-     * 商品id 商品id
+     * 商品id
      */
     private String itemId;
 
     /**
-     * 商品分类id 商品分类id
+     * 商品分类id
      */
-    private String catId;
+    private String categoryId;
 
     /**
      * 轮播图类型 轮播图类型，用于判断，可以根据商品id或者分类进行页面跳转，1：商品 2：分类
@@ -48,14 +52,18 @@ public class Carousel {
     private Integer isShow;
 
     /**
-     * 创建时间 创建时间
+     * 创建时间
      */
-    private Date createTime;
+    @CreatedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar createTime;
 
     /**
-     * 更新时间 更新
+     * 更新时间
      */
-    private Date updateTime;
+    @LastModifiedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar updateTime;
 
     public String getId() {
         return id;
@@ -89,12 +97,12 @@ public class Carousel {
         this.itemId = itemId;
     }
 
-    public String getCatId() {
-        return catId;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCatId(String catId) {
-        this.catId = catId;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Integer getType() {
@@ -121,19 +129,19 @@ public class Carousel {
         this.isShow = isShow;
     }
 
-    public Date getCreateTime() {
+    public Calendar getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Calendar createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public Calendar getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Calendar updateTime) {
         this.updateTime = updateTime;
     }
 }

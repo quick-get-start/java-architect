@@ -10,14 +10,14 @@ CREATE TABLE `carousel` (
   `image_url` varchar(128) NOT NULL COMMENT '图片 图片地址',
   `background_color` varchar(32) DEFAULT NULL COMMENT '背景色',
   `item_id` varchar(64) DEFAULT NULL COMMENT '商品id 商品id',
-  `cat_id` varchar(64) DEFAULT NULL COMMENT '商品分类id 商品分类id',
+  `category_id` varchar(64) DEFAULT NULL COMMENT '商品分类id 商品分类id',
   `type` int(11) NOT NULL COMMENT '轮播图类型 轮播图类型，用于判断，可以根据商品id或者分类进行页面跳转，1：商品 2：分类',
   `sort` int(11) NOT NULL COMMENT '轮播图展示顺序',
   `is_show` int(11) NOT NULL COMMENT '是否展示',
   `create_time` datetime NOT NULL COMMENT '创建时间 创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间 更新',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='轮播图 ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='轮播图';
 
 -- ----------------------------
 -- Records of carousel
@@ -232,13 +232,13 @@ DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `id` varchar(64) NOT NULL COMMENT '商品主键id',
   `item_name` varchar(32) NOT NULL COMMENT '商品名称 商品名称',
-  `cat_id` int(11) NOT NULL COMMENT '分类外键id 分类id',
-  `root_cat_id` int(11) NOT NULL COMMENT '一级分类外键id',
+  `category_id` int(11) NOT NULL COMMENT '分类外键id 分类id',
+  `root_category_id` int(11) NOT NULL COMMENT '一级分类外键id',
   `sell_counts` int(11) NOT NULL COMMENT '累计销售 累计销售',
   `on_off_status` int(11) NOT NULL COMMENT '上下架状态 上下架状态,1:上架 2:下架',
   `content` text NOT NULL COMMENT '商品内容 商品内容',
-  `created_time` datetime NOT NULL COMMENT '创建时间',
-  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品表 商品信息相关表：分类表，商品图片表，商品规格表，商品参数表';
 
@@ -481,8 +481,8 @@ CREATE TABLE `items_img` (
   `url` varchar(128) NOT NULL COMMENT '图片地址 图片地址',
   `sort` int(11) NOT NULL COMMENT '顺序 图片顺序，从小到大',
   `is_main` int(11) NOT NULL COMMENT '是否主图 是否主图，1：是，0：否',
-  `created_time` datetime NOT NULL COMMENT '创建时间',
-  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品图片 ';
 

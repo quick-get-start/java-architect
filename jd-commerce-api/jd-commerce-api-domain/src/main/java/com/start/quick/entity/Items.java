@@ -1,7 +1,10 @@
 package com.start.quick.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Calendar;
 
 @Entity
 public class Items {
@@ -12,39 +15,29 @@ public class Items {
     private String id;
 
     /**
-     * 商品名称 商品名称
+     * 商品名称
      */
     private String itemName;
 
     /**
-     * 分类外键id 分类id
+     * 分类id
      */
-    private Integer catId;
+    private Integer categoryId;
 
     /**
      * 一级分类外键id
      */
-    private Integer rootCatId;
+    private Integer rootCategoryId;
 
     /**
-     * 累计销售 累计销售
+     * 累计销售
      */
     private Integer sellCounts;
 
     /**
-     * 上下架状态 上下架状态,1:上架 2:下架
+     * 上下架状态 1:上架 2:下架
      */
     private Integer onOffStatus;
-
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updatedTime;
 
     /**
      * 商品内容 商品内容
@@ -52,6 +45,20 @@ public class Items {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    /**
+     * 创建时间
+     */
+    @CreatedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar createTime;
+
+    /**
+     * 更新时间
+     */
+    @LastModifiedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar updateTime;
 
     public String getId() {
         return id;
@@ -69,20 +76,20 @@ public class Items {
         this.itemName = itemName;
     }
 
-    public Integer getCatId() {
-        return catId;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public void setCatId(Integer catId) {
-        this.catId = catId;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public Integer getRootCatId() {
-        return rootCatId;
+    public Integer getRootCategoryId() {
+        return rootCategoryId;
     }
 
-    public void setRootCatId(Integer rootCatId) {
-        this.rootCatId = rootCatId;
+    public void setRootCategoryId(Integer rootCategoryId) {
+        this.rootCategoryId = rootCategoryId;
     }
 
     public Integer getSellCounts() {
@@ -101,27 +108,27 @@ public class Items {
         this.onOffStatus = onOffStatus;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Calendar getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Calendar updateTime) {
+        this.updateTime = updateTime;
     }
 }
