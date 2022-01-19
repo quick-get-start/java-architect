@@ -1,6 +1,6 @@
 window.app = {
     /* 开发环境 */
-    serverUrl: "http://localhost:8081/api/",                                  // 接口服务接口地址
+    serverUrl: "http://localhost:8081/api",                                   // 接口服务接口地址
     paymentServerUrl: "http://192.168.1.3:8089",                              // 支付中心服务地址
     shopServerUrl: "http://localhost:8081/jd-commerce-shop/",                 // 门户网站地址
     centerServerUrl: "http://localhost:8081/jd-commerce-center/",             // 用户中心地址

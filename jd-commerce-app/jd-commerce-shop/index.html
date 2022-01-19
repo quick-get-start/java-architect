@@ -453,7 +453,7 @@
 					axios.get(
 							serverUrl + '/index/carousel', {})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var carouselList = res.data.data
 								this.carouselList = carouselList;
 
