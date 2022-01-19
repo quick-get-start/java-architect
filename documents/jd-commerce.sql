@@ -49,16 +49,16 @@ CREATE TABLE `category` (
 -- Records of category
 -- ----------------------------
 BEGIN;
-INSERT INTO `category` VALUES (1, '甜点/蛋糕', 1, 0, 'img/cake.png', '每一道甜品都能打开你的味蕾', 'http://122.152.205.72:88/foodie/category/cake.png', '#fe7a65');
-INSERT INTO `category` VALUES (2, '饼干/膨化', 1, 0, 'img/cookies.png', '嘎嘣脆，一听到声音就开吃', 'http://122.152.205.72:88/foodie/category/cookies.png', '#f59cec');
-INSERT INTO `category` VALUES (3, '熟食/肉类', 1, 0, 'img/meat.png', '食肉者最爱绝佳美食', 'http://122.152.205.72:88/foodie/category/meat.png', '#b474fe');
-INSERT INTO `category` VALUES (4, '素食/卤味', 1, 0, 'img/luwei.png', '香辣甜辣麻辣，辣了才有味', 'http://122.152.205.72:88/foodie/category/duck.png', '#82ceff');
-INSERT INTO `category` VALUES (5, '坚果/炒货', 1, 0, 'img/jianguo.png', '酥脆无比，休闲最佳', 'http://122.152.205.72:88/foodie/category/nut.png', '#c6a868');
-INSERT INTO `category` VALUES (6, '糖果/蜜饯', 1, 0, 'img/sweet.png', '甜味是爱美者的最爱', 'http://122.152.205.72:88/foodie/category/mango.png', '#6bdea7');
-INSERT INTO `category` VALUES (7, '巧克力', 1, 0, 'img/chocolate.png', '美容养颜，男女都爱', 'http://122.152.205.72:88/foodie/category/chocolate.png', '#f8c375');
-INSERT INTO `category` VALUES (8, '海鲜/海味', 1, 0, 'img/lobster.png', '吃货们怎么能少了海鲜呢？', 'http://122.152.205.72:88/foodie/category/crab.png', '#84affe');
-INSERT INTO `category` VALUES (9, '花茶/果茶', 1, 0, 'img/tea.png', '绿茶红茶怎能少得了', 'http://122.152.205.72:88/foodie/category/tea.png', '#ff9229');
-INSERT INTO `category` VALUES (10, '生鲜/蔬果', 1, 0, 'img/food.png', '新鲜少不了，每日蔬果生鲜', 'http://122.152.205.72:88/foodie/category/meat2.png', '#6cc67c');
+INSERT INTO `category` VALUES (1, '甜点/蛋糕', 1, 0, 'img/cake.png', '每一道甜品都能打开你的味蕾', 'http://127.0.0.1:8082/category-cake.png', '#fe7a65');
+INSERT INTO `category` VALUES (2, '饼干/膨化', 1, 0, 'img/cookies.png', '嘎嘣脆，一听到声音就开吃', 'http://127.0.0.1:8082/category-cookies.png', '#f59cec');
+INSERT INTO `category` VALUES (3, '熟食/肉类', 1, 0, 'img/meat.png', '食肉者最爱绝佳美食', 'http://127.0.0.1:8082/category-meat.png', '#b474fe');
+INSERT INTO `category` VALUES (4, '素食/卤味', 1, 0, 'img/luwei.png', '香辣甜辣麻辣，辣了才有味', 'http://127.0.0.1:8082/category-duck.png', '#82ceff');
+INSERT INTO `category` VALUES (5, '坚果/炒货', 1, 0, 'img/jianguo.png', '酥脆无比，休闲最佳', 'http://127.0.0.1:8082/category-nut.png', '#c6a868');
+INSERT INTO `category` VALUES (6, '糖果/蜜饯', 1, 0, 'img/sweet.png', '甜味是爱美者的最爱', 'http://127.0.0.1:8082/category-mango.png', '#6bdea7');
+INSERT INTO `category` VALUES (7, '巧克力', 1, 0, 'img/chocolate.png', '美容养颜，男女都爱', 'http://127.0.0.1:8082/category-chocolate.png', '#f8c375');
+INSERT INTO `category` VALUES (8, '海鲜/海味', 1, 0, 'img/lobster.png', '吃货们怎么能少了海鲜呢？', 'http://127.0.0.1:8082/category-crab.png', '#84affe');
+INSERT INTO `category` VALUES (9, '花茶/果茶', 1, 0, 'img/tea.png', '绿茶红茶怎能少得了', 'http://127.0.0.1:8082/category-tea.png', '#ff9229');
+INSERT INTO `category` VALUES (10, '生鲜/蔬果', 1, 0, 'img/food.png', '新鲜少不了，每日蔬果生鲜', 'http://127.0.0.1:8082/category-meat2.png', '#6cc67c');
 INSERT INTO `category` VALUES (11, '蛋糕', 2, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `category` VALUES (12, '点心', 2, 1, NULL, NULL, NULL, NULL);
 INSERT INTO `category` VALUES (13, '饼干', 2, 2, NULL, NULL, NULL, NULL);
