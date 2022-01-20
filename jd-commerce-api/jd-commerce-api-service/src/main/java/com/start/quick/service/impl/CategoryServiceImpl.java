@@ -8,17 +8,11 @@ import com.start.quick.model.ItemsModel;
 import com.start.quick.model.SubCategoryModel;
 import com.start.quick.repository.CategoryRepository;
 import com.start.quick.service.CategoryService;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
