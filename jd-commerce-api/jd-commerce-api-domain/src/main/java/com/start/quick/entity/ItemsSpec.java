@@ -1,7 +1,11 @@
 package com.start.quick.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -45,12 +49,17 @@ public class ItemsSpec {
     /**
      * 创建时间
      */
-    private Date createdTime;
+    @CreatedDate
+    @Column(columnDefinition = "DATETIME")
+    @OrderBy
+    private Calendar createTime;
 
     /**
      * 更新时间
      */
-    private Date updatedTime;
+    @LastModifiedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar updateTime;
 
     public String getId() {
         return id;
@@ -108,19 +117,19 @@ public class ItemsSpec {
         this.priceNormal = priceNormal;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Calendar getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Calendar getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(Calendar updateTime) {
+        this.updateTime = updateTime;
     }
 }

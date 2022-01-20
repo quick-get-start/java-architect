@@ -484,7 +484,7 @@ CREATE TABLE `items_img` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品图片 ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品图片';
 
 -- ----------------------------
 -- Records of items_img
@@ -858,10 +858,10 @@ CREATE TABLE `items_param` (
   `weight` varchar(32) NOT NULL COMMENT '规格重量 规格重量，例：35g',
   `storage_method` varchar(32) NOT NULL COMMENT '存储方法 存储方法，例：常温5~25°',
   `eat_method` varchar(32) NOT NULL COMMENT '食用方式 食用方式，例：开袋即食',
-  `created_time` datetime NOT NULL COMMENT '创建时间',
-  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品参数 ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品参数';
 
 -- ----------------------------
 -- Records of items_param
@@ -1055,8 +1055,8 @@ CREATE TABLE `items_spec` (
   `discounts` decimal(4,2) NOT NULL COMMENT '折扣力度',
   `price_discount` int(11) NOT NULL COMMENT '优惠价',
   `price_normal` int(11) NOT NULL COMMENT '原价',
-  `created_time` datetime NOT NULL COMMENT '创建时间',
-  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品规格 每一件商品都有不同的规格，不同的规格又有不同的价格和优惠力度，规格表为此设计';
 
