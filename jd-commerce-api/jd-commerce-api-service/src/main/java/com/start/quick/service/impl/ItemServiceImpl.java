@@ -96,19 +96,7 @@ public class ItemServiceImpl implements ItemService {
             viewModels = this.itemsCommentsRepository.pageAll(itemId, pageable);
         }
 
-        List<ItemCommentsModel> content = new ArrayList<>();
-        for (ItemCommentsViewModel viewModel : viewModels) {
-            content.add(
-                    new ItemCommentsModel(
-                            viewModel.getCommentLevel(),
-                            viewModel.getContent(),
-                            viewModel.getSpecName(),
-                            viewModel.getCreateTime(),
-                            viewModel.getUserAvatar(),
-                            DesensitizationUtils.commonDisplay(viewModel.getNickName())
-                    )
-            );
-        }
-        return new PageImpl<>(content, pageable, viewModels.getTotalPages());
+        return viewModels.map(item -> new ItemCommentsModel(item.getCommentLevel(), item.getContent(), item.getSpecName(), item.getCreateTime(),
+                item.getUserAvatar(), DesensitizationUtils.commonDisplay(item.getNickName())));
     }
 }
