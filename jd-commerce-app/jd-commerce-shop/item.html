@@ -447,15 +447,14 @@
 				},
 				// 渲染商品评价等级数量
 				renderCommentLevelCounts(itemId) {
-
 					var serverUrl = app.serverUrl;
 					axios.defaults.withCredentials = true;
 					axios.get(serverUrl + '/items/commentLevel?itemId=' + itemId, {})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var countsVO = res.data.data;
 								this.countsVO = countsVO;
-							} else if (res.data.status == 500) {
+							} else {
 								alert(res.data.msg);
 							}
 						});

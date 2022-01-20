@@ -7,12 +7,10 @@ import com.start.quick.entity.ItemsImg;
 import com.start.quick.entity.ItemsParam;
 import com.start.quick.entity.ItemsSpec;
 import com.start.quick.http.ItemInfoResponse;
+import com.start.quick.model.CommentLevelCountModel;
 import com.start.quick.service.ItemService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -52,5 +50,15 @@ public class ItemsController {
         itemInfo.setItemParam(itemParam);
 
         return JSONResult.ok("查询商品信息成功", itemInfo);
+    }
+
+    @GetMapping("/commentLevel")
+    public JSONResult<CommentLevelCountModel> commentLevel(@RequestParam String itemId) {
+        if (StringUtils.isBlank(itemId)) {
+            return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");
+        }
+
+        CommentLevelCountModel countModel = this.itemService.findCommentLevelCount(itemId);
+        return JSONResult.ok("查询商品评价成功", countModel);
     }
 }

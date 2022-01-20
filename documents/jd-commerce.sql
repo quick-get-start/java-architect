@@ -435,8 +435,8 @@ CREATE TABLE `items_comments` (
   `spec_name` varchar(32) DEFAULT NULL COMMENT '规格名称 可为空',
   `comment_level` int(11) NOT NULL COMMENT '评价等级 1：好评 2：中评 3：差评',
   `content` varchar(128) NOT NULL COMMENT '评价内容',
-  `created_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品评价表 ';
 
