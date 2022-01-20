@@ -52,7 +52,7 @@ public class ItemsController {
         return JSONResult.ok("查询商品信息成功", itemInfo);
     }
 
-    @GetMapping("/commentLevel")
+    @GetMapping("commentLevel")
     public JSONResult<CommentLevelCountModel> commentLevel(@RequestParam String itemId) {
         if (StringUtils.isBlank(itemId)) {
             return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");

@@ -1812,4 +1812,11 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表 ';
 
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+BEGIN;
+INSERT INTO `users` VALUES ('bb2cb6b8-b333-40a3-a90c-0ed35e9121a2', 'jd', '$2a$10$IMjKEm8t.UFM6Vf7GCbHS.n02PhT5iogKJKMoT6f4u/uEgM5OsIyi', 'jd', NULL, 'https://wx3.sinaimg.cn/orj360/001l3UC8gy1gy5gbleci2j637k2eo1ky02.jpg', NULL, NULL, 2, '2022-01-20', '2022-01-20 21:57:02', '2022-01-20 21:57:02');
+COMMIT;
+
 SET FOREIGN_KEY_CHECKS = 1;
