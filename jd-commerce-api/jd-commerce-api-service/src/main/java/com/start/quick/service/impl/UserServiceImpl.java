@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    public static final String DEFAULT_USER_AVATAR = "https://wx3.sinaimg.cn/orj360/001l3UC8gy1gy5gbleci2j637k2eo1ky02.jpg";
+    public static final String DEFAULT_USER_AVATAR = "http://127.0.0.1:8082/avatar.png";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
