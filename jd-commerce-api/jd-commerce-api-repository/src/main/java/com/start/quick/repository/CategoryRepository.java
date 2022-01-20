@@ -1,8 +1,10 @@
 package com.start.quick.repository;
 
+import com.start.quick.domain.CategoryItemsViewModel;
 import com.start.quick.domain.SubCategoryViewModel;
 import com.start.quick.entity.Category;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -19,14 +21,14 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
             "where father.fatherId = :rootId")
     List<SubCategoryViewModel> findAllSubCategoriesByRootId(Integer rootId);
 
-    @SuppressWarnings("SpringDataRepositoryMethodReturnTypeInspection")
-    @Query(nativeQuery = true, value = "select category.id, category.name, category.slogan, category.category_image, category.bg_color, items.id as item_id, items.item_name, items_img.url " +
-            "from category " +
-            "left join items on category.id = items.root_category_id " +
-            "left join items_img on items.id = items_img.item_id " +
-            "where category.type = 1 and items_img.is_main = 1 " +
-            "and items.root_category_id = :rootId " +
-            "order by items.create_time desc " +
-            "limit 6")
-    Object[] findFreshItemsByCategoryId(Integer rootId);
+    @SuppressWarnings({"SqlDialectInspection", "SqlNoDataSourceInspection"})
+    @Query(nativeQuery = true,
+            value = "select category.id as id, category.name as name, category.slogan as slogan, category.category_image as categoryImage, category.bg_color as bgColor, item.id as itemId, item.item_name as itemName, image.url as itemUrl " +
+                    "from category " +
+                    "left join items item on category.id = item.root_category_id " +
+                    "left join items_img image on item.id = image.item_id " +
+                    "where category.type = 1 and image.is_main = 1 " +
+                    "and item.root_category_id = :rootId " +
+                    "order by item.create_time desc")
+    Slice<CategoryItemsViewModel> pageFreshItemsByCategoryId(Integer rootId, Pageable pageable);
 }
