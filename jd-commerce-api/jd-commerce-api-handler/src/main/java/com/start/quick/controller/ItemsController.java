@@ -1,0 +1,56 @@
+package com.start.quick.controller;
+
+import com.start.quick.code.ItemResultCode;
+import com.start.quick.common.JSONResult;
+import com.start.quick.entity.Items;
+import com.start.quick.entity.ItemsImg;
+import com.start.quick.entity.ItemsParam;
+import com.start.quick.entity.ItemsSpec;
+import com.start.quick.http.ItemInfoResponse;
+import com.start.quick.service.ItemService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+
+@RestController
+@RequestMapping("items")
+public class ItemsController {
+
+    private final ItemService itemService;
+
+    public ItemsController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @GetMapping("info/{itemId}")
+    public JSONResult<ItemInfoResponse> info(@PathVariable String itemId) {
+        if (StringUtils.isBlank(itemId)) {
+            return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");
+        }
+
+        Items item;
+
+        try {
+            item = this.itemService.findById(itemId);
+        } catch (EntityNotFoundException e) {
+            return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");
+        }
+
+        List<ItemsImg> itemImages = this.itemService.findItemImage(itemId);
+        List<ItemsSpec> itemSpecs = this.itemService.findItemSpec(itemId);
+        ItemsParam itemParam = this.itemService.findItemParam(itemId);
+
+        ItemInfoResponse itemInfo = new ItemInfoResponse();
+        itemInfo.setItem(item);
+        itemInfo.setItemImages(itemImages);
+        itemInfo.setItemSpecs(itemSpecs);
+        itemInfo.setItemParam(itemParam);
+
+        return JSONResult.ok("查询商品信息成功", itemInfo);
+    }
+}
