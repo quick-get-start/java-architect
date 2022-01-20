@@ -2,13 +2,13 @@ package com.start.quick.controller;
 
 import com.start.quick.code.ItemResultCode;
 import com.start.quick.common.JSONResult;
-import com.start.quick.domain.ItemCommentsViewModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
 import com.start.quick.entity.ItemsParam;
 import com.start.quick.entity.ItemsSpec;
 import com.start.quick.http.ItemInfoResponse;
 import com.start.quick.model.CommentLevelCountModel;
+import com.start.quick.model.ItemCommentsModel;
 import com.start.quick.service.ItemService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -65,10 +65,10 @@ public class ItemsController {
     }
 
     @GetMapping("comments")
-    public JSONResult<Page<ItemCommentsViewModel>> comments(@RequestParam String itemId,
-                                                            @RequestParam(required = false) Integer level,
-                                                            @RequestParam(required = false) Integer page,
-                                                            @RequestParam(required = false) Integer pageSize) {
+    public JSONResult<Page<ItemCommentsModel>> comments(@RequestParam String itemId,
+                                                        @RequestParam(required = false) Integer level,
+                                                        @RequestParam(required = false) Integer page,
+                                                        @RequestParam(required = false) Integer pageSize) {
         if (StringUtils.isBlank(itemId)) {
             return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");
         }
@@ -79,7 +79,7 @@ public class ItemsController {
         if (pageSize == null) {
             pageSize = 10;
         }
-        Page<ItemCommentsViewModel> result = this.itemService.pageAll(itemId, level, page - 1, pageSize);
+        Page<ItemCommentsModel> result = this.itemService.pageAll(itemId, level, page - 1, pageSize);
 
         return JSONResult.ok("商品评价查询成功", result);
     }

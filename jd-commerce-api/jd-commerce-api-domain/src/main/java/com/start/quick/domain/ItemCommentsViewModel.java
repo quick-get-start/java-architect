@@ -1,7 +1,5 @@
 package com.start.quick.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 public interface ItemCommentsViewModel {
@@ -12,7 +10,6 @@ public interface ItemCommentsViewModel {
 
     String getSpecName();
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date getCreateTime();
 
     String getUserAvatar();

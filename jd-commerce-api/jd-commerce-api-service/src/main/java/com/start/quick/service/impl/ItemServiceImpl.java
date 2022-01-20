@@ -8,17 +8,18 @@ import com.start.quick.entity.ItemsParam;
 import com.start.quick.entity.ItemsSpec;
 import com.start.quick.enums.CommentLevel;
 import com.start.quick.model.CommentLevelCountModel;
+import com.start.quick.model.ItemCommentsModel;
 import com.start.quick.repository.*;
 import com.start.quick.service.ItemService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import com.start.quick.utils.DesensitizationUtils;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -86,11 +87,28 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public Page<ItemCommentsViewModel> pageAll(String itemId, Integer level, Integer page, Integer pageSize) {
+    public Page<ItemCommentsModel> pageAll(String itemId, Integer level, Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
+        Page<ItemCommentsViewModel> viewModels;
         if (level != null) {
-            return this.itemsCommentsRepository.pageAll(itemId, level, pageable);
+            viewModels = this.itemsCommentsRepository.pageAll(itemId, level, pageable);
+        } else {
+            viewModels = this.itemsCommentsRepository.pageAll(itemId, pageable);
         }
-        return this.itemsCommentsRepository.pageAll(itemId, pageable);
+
+        List<ItemCommentsModel> content = new ArrayList<>();
+        for (ItemCommentsViewModel viewModel : viewModels) {
+            content.add(
+                    new ItemCommentsModel(
+                            viewModel.getCommentLevel(),
+                            viewModel.getContent(),
+                            viewModel.getSpecName(),
+                            viewModel.getCreateTime(),
+                            viewModel.getUserAvatar(),
+                            DesensitizationUtils.commonDisplay(viewModel.getNickName())
+                    )
+            );
+        }
+        return new PageImpl<>(content, pageable, viewModels.getTotalPages());
     }
 }
