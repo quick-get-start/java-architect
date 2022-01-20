@@ -279,7 +279,7 @@
 							<li class="am-comment" v-for="(commentRecord, commentIndex) in commentList">
 								<!-- 评论容器 -->
 								<a href="javascript:void(0);">
-									<img class="am-comment-avatar" :src="commentRecord.userFace" />
+									<img class="am-comment-avatar" :src="commentRecord.userAvatar" />
 									<!-- 评论者头像 -->
 								</a>
 								<div class="am-comment-main">
@@ -289,10 +289,10 @@
 										<div class="am-comment-meta">
 											<!-- 评论元数据 -->
 											<a href="#link-to-user"
-												class="am-comment-author">{{commentRecord.nickname}} (匿名)</a>
+												class="am-comment-author">{{commentRecord.nickName}} (匿名)</a>
 											<!-- 评论者 -->
 											评论于
-											<time datetime="">{{commentRecord.createdTime}}</time>
+											<time datetime="">{{commentRecord.createTime}}</time>
 										</div>
 									</header>
 
@@ -476,9 +476,9 @@
 					axios.defaults.withCredentials = true;
 					axios.get(serverUrl + '/items/comments?itemId=' + itemId + "&level=" + level + "&page=" + page + "&pageSize=" + pageSize, {})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var grid = res.data.data;
-								var commentList = grid.rows;
+								var commentList = grid.content;
 								this.commentList = commentList;
 
 								for (var i = 0 ; i < commentList.length ; i ++) {
@@ -487,13 +487,13 @@
 									commentList[i].createdTime = formatedTime;
 								}
 
-								var maxPage = grid.total; // 获得总页数
-								var total = grid.records; // 获得总记录数
+								var maxPage = grid.totalPages; // 获得总页数
+								var total = grid.totalElements; // 获得总记录数
 
 								this.maxPage = maxPage;
 								this.total = total;
 
-							} else if (res.data.status == 500) {
+							} else {
 								alert(res.data.msg);
 							}
 						});
