@@ -1,6 +1,7 @@
 package com.start.quick.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.start.quick.code.CategoryResultCode;
 import com.start.quick.code.ItemResultCode;
 import com.start.quick.common.JSONResult;
 import com.start.quick.model.ItemsSearchModel;
@@ -103,6 +104,26 @@ public class ItemsController {
         }
 
         PageInfo<ItemsSearchModel> result = this.itemService.searchItems(keyword, sort, page, pageSize);
+        return JSONResult.ok("商品搜索成功", result);
+    }
+
+    @GetMapping("searchByCategory")
+    public JSONResult<PageInfo<ItemsSearchModel>> search(@RequestParam Integer categoryId,
+                                                         @RequestParam String sort,
+                                                         @RequestParam(required = false) Integer page,
+                                                         @RequestParam(required = false) Integer pageSize) {
+        if (categoryId == null) {
+            return JSONResult.build(CategoryResultCode.INVALID_REQUEST_PARAM, "商品不存在");
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 20;
+        }
+
+        PageInfo<ItemsSearchModel> result = this.itemService.searchItemsByCategory(categoryId, sort, page, pageSize);
         return JSONResult.ok("商品搜索成功", result);
     }
 }

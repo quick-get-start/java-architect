@@ -111,4 +111,12 @@ public class ItemServiceImpl implements ItemService {
         List<ItemsSearchModel> content = this.itemsMapper.searchItems(keyword, sort);
         return new PageInfo<>(content);
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageInfo<ItemsSearchModel> searchItemsByCategory(Integer categoryId, String sort, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<ItemsSearchModel> content = this.itemsMapper.searchItemsByCategory(categoryId, sort);
+        return new PageInfo<>(content);
+    }
 }

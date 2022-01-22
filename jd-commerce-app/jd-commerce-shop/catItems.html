@@ -331,23 +331,20 @@
 					// debugger;
 					var serverUrl = app.serverUrl;
 					axios.defaults.withCredentials = true;
-					axios.get(serverUrl + '/items/catItems?catId=' + catId + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
+					axios.get(serverUrl + '/items/searchByCategory?categoryId=' + catId + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var grid = res.data.data;
-								var itemsList = grid.rows;
+								var itemsList = grid.list;
 								this.itemsList = itemsList;
 
-								var maxPage = grid.total;		// 获得总页数
-								var total = grid.records;		// 获得总记录数
+								var maxPage = grid.pages;		// 获得总页数
+								var total = grid.total;	    	// 获得总记录数
 								
 								this.maxPage = maxPage;
 								this.total = total;
-
-								// console.log(itemsList);
-							} else if (res.data.status == 500) {
+							} else {
 								alert(res.data.msg);
-								return;
 							}
 						});
 				},

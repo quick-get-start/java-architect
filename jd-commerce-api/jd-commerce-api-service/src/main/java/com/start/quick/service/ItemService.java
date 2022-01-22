@@ -27,4 +27,6 @@ public interface ItemService {
     Page<ItemCommentsModel> pageAllComments(String itemId, Integer level, Integer page, Integer pageSize);
 
     PageInfo<ItemsSearchModel> searchItems(String keyword, String sort, Integer page, Integer pageSize);
+
+    PageInfo<ItemsSearchModel> searchItemsByCategory(Integer categoryId, String sort, Integer page, Integer pageSize);
 }

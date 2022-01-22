@@ -13,4 +13,7 @@ public interface ItemsMapper {
     @SuppressWarnings("UnusedReturnValue")
     @SelectProvider(type = ItemsProvider.class, method = "searchItems")
     List<ItemsSearchModel> searchItems(String keyword, String sort);
+
+    @SelectProvider(type = ItemsProvider.class, method = "searchItemsByCategory")
+    List<ItemsSearchModel> searchItemsByCategory(Integer categoryId, String sort);
 }
