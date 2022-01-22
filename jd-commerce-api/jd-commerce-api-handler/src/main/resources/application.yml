@@ -25,3 +25,6 @@ spring:
       connection-test-query: SELECT 1
   jackson:
     default-property-inclusion: non_empty
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
