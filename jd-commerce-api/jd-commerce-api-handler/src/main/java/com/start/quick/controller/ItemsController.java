@@ -1,7 +1,9 @@
 package com.start.quick.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.start.quick.code.ItemResultCode;
 import com.start.quick.common.JSONResult;
+import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
 import com.start.quick.entity.ItemsParam;
@@ -79,8 +81,28 @@ public class ItemsController {
         if (pageSize == null) {
             pageSize = 10;
         }
-        Page<ItemCommentsModel> result = this.itemService.pageAll(itemId, level, page - 1, pageSize);
+        Page<ItemCommentsModel> result = this.itemService.pageAllComments(itemId, level, page, pageSize);
 
         return JSONResult.ok("商品评价查询成功", result);
+    }
+
+    @GetMapping("search")
+    public JSONResult<PageInfo<ItemsSearchModel>> search(@RequestParam String keyword,
+                                                         @RequestParam String sort,
+                                                         @RequestParam(required = false) Integer page,
+                                                         @RequestParam(required = false) Integer pageSize) {
+        if (StringUtils.isBlank(keyword)) {
+            return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "商品不存在");
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 20;
+        }
+
+        PageInfo<ItemsSearchModel> result = this.itemService.searchItems(keyword, sort, page, pageSize);
+        return JSONResult.ok("商品搜索成功", result);
     }
 }

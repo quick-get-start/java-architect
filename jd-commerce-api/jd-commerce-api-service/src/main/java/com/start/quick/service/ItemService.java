@@ -1,5 +1,7 @@
 package com.start.quick.service;
 
+import com.github.pagehelper.PageInfo;
+import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
 import com.start.quick.entity.ItemsParam;
@@ -22,5 +24,7 @@ public interface ItemService {
 
     CommentLevelCountModel findCommentLevelCount(String itemId);
 
-    Page<ItemCommentsModel> pageAll(String itemId, Integer level, Integer page, Integer pageSize);
+    Page<ItemCommentsModel> pageAllComments(String itemId, Integer level, Integer page, Integer pageSize);
+
+    PageInfo<ItemsSearchModel> searchItems(String keyword, String sort, Integer page, Integer pageSize);
 }

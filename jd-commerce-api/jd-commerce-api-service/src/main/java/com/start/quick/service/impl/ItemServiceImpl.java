@@ -1,12 +1,16 @@
 package com.start.quick.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.start.quick.domain.ItemCommentsViewModel;
+import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.domain.StatisticsViewModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
 import com.start.quick.entity.ItemsParam;
 import com.start.quick.entity.ItemsSpec;
 import com.start.quick.enums.CommentLevel;
+import com.start.quick.mapper.ItemsMapper;
 import com.start.quick.model.CommentLevelCountModel;
 import com.start.quick.model.ItemCommentsModel;
 import com.start.quick.repository.*;
@@ -28,13 +32,15 @@ public class ItemServiceImpl implements ItemService {
     private final ItemsSpecRepository itemsSpecRepository;
     private final ItemsParamRepository itemsParamRepository;
     private final ItemsCommentsRepository itemsCommentsRepository;
+    private final ItemsMapper itemsMapper;
 
-    public ItemServiceImpl(ItemsRepository itemsRepository, ItemsImgRepository itemsImgRepository, ItemsSpecRepository itemsSpecRepository, ItemsParamRepository itemsParamRepository, ItemsCommentsRepository itemsCommentsRepository) {
+    public ItemServiceImpl(ItemsRepository itemsRepository, ItemsImgRepository itemsImgRepository, ItemsSpecRepository itemsSpecRepository, ItemsParamRepository itemsParamRepository, ItemsCommentsRepository itemsCommentsRepository, ItemsMapper itemsMapper) {
         this.itemsRepository = itemsRepository;
         this.itemsImgRepository = itemsImgRepository;
         this.itemsSpecRepository = itemsSpecRepository;
         this.itemsParamRepository = itemsParamRepository;
         this.itemsCommentsRepository = itemsCommentsRepository;
+        this.itemsMapper = itemsMapper;
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -85,8 +91,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
-    public Page<ItemCommentsModel> pageAll(String itemId, Integer level, Integer page, Integer pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
+    public Page<ItemCommentsModel> pageAllComments(String itemId, Integer level, Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page - 1, pageSize);
         Page<ItemCommentsViewModel> viewModels;
         if (level != null) {
             viewModels = this.itemsCommentsRepository.pageAll(itemId, level, pageable);
@@ -96,5 +102,13 @@ public class ItemServiceImpl implements ItemService {
 
         return viewModels.map(item -> new ItemCommentsModel(item.getCommentLevel(), item.getContent(), item.getSpecName(), item.getCreateTime(),
                 item.getUserAvatar(), DesensitizationUtils.commonDisplay(item.getNickName())));
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageInfo<ItemsSearchModel> searchItems(String keyword, String sort, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<ItemsSearchModel> content = this.itemsMapper.searchItems(keyword, sort);
+        return new PageInfo<>(content);
     }
 }
