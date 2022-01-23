@@ -48,4 +48,11 @@ public class AddressController {
         this.addressService.delete(addressId);
         return JSONResult.ok("用户地址删除成功");
     }
+
+    @PostMapping("setDefault")
+    public JSONResult<Void> setDefault(@RequestParam String userId,
+                                       @RequestParam String addressId) {
+        this.addressService.setDefault(userId, addressId);
+        return JSONResult.ok("默认地址设置成功");
+    }
 }

@@ -14,4 +14,6 @@ public interface AddressService {
     void update(String id, UserAddressModel addressModel);
 
     void delete(String id);
+
+    void setDefault(String userId, String addressId);
 }

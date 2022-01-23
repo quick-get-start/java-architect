@@ -1,6 +1,7 @@
 package com.start.quick.service.impl;
 
 import com.start.quick.entity.UserAddress;
+import com.start.quick.enums.YesOrNo;
 import com.start.quick.model.UserAddressModel;
 import com.start.quick.repository.AddressRepository;
 import com.start.quick.service.AddressService;
@@ -32,10 +33,10 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void save(UserAddressModel addressModel) {
-        int isDefault = 0;
+        int isDefault = YesOrNo.NO;
         List<UserAddress> addresses = this.findAllByUserId(addressModel.getUserId());
         if (CollectionUtils.isEmpty(addresses)) {
-            isDefault = 1;
+            isDefault = YesOrNo.YES;
         }
 
         UserAddress address = new UserAddress();
@@ -56,5 +57,16 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void delete(String id) {
         this.addressRepository.deleteById(id);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void setDefault(String userId, String addressId) {
+        List<UserAddress> addresses = this.addressRepository.findAllByUserIdAndIsDefault(userId, YesOrNo.YES);
+        for (UserAddress address : addresses) {
+            address.setIsDefault(YesOrNo.NO);
+        }
+        UserAddress address = this.addressRepository.findById(addressId).orElseThrow(EntityNotFoundException::new);
+        address.setIsDefault(YesOrNo.YES);
     }
 }

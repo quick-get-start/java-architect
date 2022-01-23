@@ -8,4 +8,6 @@ import java.util.List;
 public interface AddressRepository extends CrudRepository<UserAddress, String> {
 
     List<UserAddress> findAllByUserId(String userId);
+
+    List<UserAddress> findAllByUserIdAndIsDefault(String userId, Integer isDefault);
 }
