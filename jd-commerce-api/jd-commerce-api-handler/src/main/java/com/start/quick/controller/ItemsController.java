@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.start.quick.code.CategoryResultCode;
 import com.start.quick.code.ItemResultCode;
 import com.start.quick.common.JSONResult;
+import com.start.quick.model.ItemsCartModel;
 import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
@@ -125,5 +126,11 @@ public class ItemsController {
 
         PageInfo<ItemsSearchModel> result = this.itemService.searchItemsByCategory(categoryId, sort, page, pageSize);
         return JSONResult.ok("商品搜索成功", result);
+    }
+
+    @GetMapping("refresh")
+    public JSONResult<List<ItemsCartModel>> refreshItems(@RequestParam List<String> specIds) {
+        List<ItemsCartModel> result = this.itemService.refreshItems(specIds);
+        return JSONResult.ok("购物车商品刷新成功", result);
     }
 }

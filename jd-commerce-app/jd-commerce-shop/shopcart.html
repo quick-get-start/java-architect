@@ -412,10 +412,10 @@
 						var serverUrl = app.serverUrl;
 							axios.defaults.withCredentials = true;
 							axios.get(
-									serverUrl + '/items/refresh?itemSpecIds=' + itemSpecIds, 
+									serverUrl + '/items/refresh?specIds=' + itemSpecIds, 
 									{},)
 									.then(res => {
-										if (res.data.status == 200) {
+										if (res.data.code == 0) {
 											var newItemList = res.data.data;
 											// 删除现有购物车cookie
 											app.deleteCookie("shopcart");
@@ -443,7 +443,7 @@
 											shopcartList = app.getShopcartList();
 											// console.log(shopcartList);
 											this.shopcartList = shopcartList;	
-										} else if (res.data.status == 500) {
+										} else {
 											alert(res.data.msg);
 										}
 									});

@@ -3,6 +3,7 @@ package com.start.quick.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.start.quick.domain.ItemCommentsViewModel;
+import com.start.quick.model.ItemsCartModel;
 import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.domain.StatisticsViewModel;
 import com.start.quick.entity.Items;
@@ -118,5 +119,11 @@ public class ItemServiceImpl implements ItemService {
         PageHelper.startPage(page, pageSize);
         List<ItemsSearchModel> content = this.itemsMapper.searchItemsByCategory(categoryId, sort);
         return new PageInfo<>(content);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ItemsCartModel> refreshItems(List<String> specIds) {
+        return this.itemsRepository.refreshItems(specIds);
     }
 }

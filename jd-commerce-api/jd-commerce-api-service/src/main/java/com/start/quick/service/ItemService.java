@@ -1,6 +1,7 @@
 package com.start.quick.service;
 
 import com.github.pagehelper.PageInfo;
+import com.start.quick.model.ItemsCartModel;
 import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.entity.Items;
 import com.start.quick.entity.ItemsImg;
@@ -29,4 +30,6 @@ public interface ItemService {
     PageInfo<ItemsSearchModel> searchItems(String keyword, String sort, Integer page, Integer pageSize);
 
     PageInfo<ItemsSearchModel> searchItemsByCategory(Integer categoryId, String sort, Integer page, Integer pageSize);
+
+    List<ItemsCartModel> refreshItems(List<String> specIds);
 }
