@@ -789,13 +789,13 @@
 								}
 							})
 							.then(res => {
-								if (res.data.status == 200) {
+								if (res.data.code == 0) {
 									this.closeAddressDialog();
 									this.renderUserAddressList();
 
 									// 设置更新地址的id为空
 									this.updatedAddressId = "";
-								} else if (res.data.status == 500) {
+								} else {
 									alert(res.data.msg);
 								}
 							});
