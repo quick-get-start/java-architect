@@ -1,6 +1,10 @@
 package com.start.quick.entity;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -72,14 +76,18 @@ public class Orders {
     private Integer isDelete;
 
     /**
-     * 创建时间（成交时间）
+     * 创建时间
      */
-    private Date createdTime;
+    @CreatedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar createTime;
 
     /**
      * 更新时间
      */
-    private Date updatedTime;
+    @LastModifiedDate
+    @Column(columnDefinition = "DATETIME")
+    private Calendar updateTime;
 
     public String getId() {
         return id;
@@ -185,19 +193,19 @@ public class Orders {
         this.isDelete = isDelete;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Calendar getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Calendar getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(Calendar updateTime) {
+        this.updateTime = updateTime;
     }
 }

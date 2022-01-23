@@ -19,7 +19,7 @@ public class OrderStatus {
     /**
      * 订单创建时间;对应[10:待付款]状态
      */
-    private Date createdTime;
+    private Date createTime;
 
     /**
      * 支付成功时间;对应[20:已付款，待发货]状态
@@ -62,12 +62,12 @@ public class OrderStatus {
         this.orderStatus = orderStatus;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Date getPayTime() {
