@@ -845,8 +845,8 @@
 					// 请求后端获得最新数据
 					var serverUrl = app.serverUrl;
 					axios.defaults.withCredentials = true;
-					axios.post(
-							serverUrl + '/address/list?userId=' + userInfo.id, {}, 
+					axios.get(
+							serverUrl + '/address?userId=' + userInfo.id, {}, 
 							{
 								headers: {
 									'headerUserId': userInfo.id,
@@ -854,7 +854,7 @@
 								}
 							})
 						.then(res => {
-							if (res.data.status == 200) {
+							if (res.data.code == 0) {
 								var addressList = res.data.data;
 								// console.log(addressList);
 								this.addressList = addressList;
@@ -864,12 +864,8 @@
 
 								// 清空地址内容
 								this.flushAddressForm();
-							} else if (res.data.status == 500) {
-								alert(res.data.msg);
-								console.log(res.data.msg);
 							} else {
 								alert(res.data.msg);
-								console.log(res.data.msg);
 							}
 						});
 				},
