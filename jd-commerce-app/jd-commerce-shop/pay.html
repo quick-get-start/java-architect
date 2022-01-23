@@ -638,7 +638,7 @@
 					var userInfo = this.userInfo;
 					var serverUrl = app.serverUrl;
 					axios.defaults.withCredentials = true;
-					axios.post(
+					axios.delete(
 							serverUrl + '/address/delete?userId=' + userInfo.id + "&addressId=" + addressId, 
 							{},
 							{
@@ -648,7 +648,7 @@
 								}
 							})
 							.then(res => {
-								if (res.data.status == 200) {
+								if (res.data.code == 0) {
 									this.renderUserAddressList();
 								} else {
 									alert(res.data.msg);

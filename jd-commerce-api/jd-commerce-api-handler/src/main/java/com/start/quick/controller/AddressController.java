@@ -42,4 +42,10 @@ public class AddressController {
         this.addressService.update(addressId, addressModel);
         return JSONResult.ok("用户地址更新成功");
     }
+
+    @DeleteMapping("delete")
+    public JSONResult<Void> update(@RequestParam String addressId) {
+        this.addressService.delete(addressId);
+        return JSONResult.ok("用户地址删除成功");
+    }
 }

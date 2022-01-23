@@ -12,4 +12,6 @@ public interface AddressService {
     void save(UserAddressModel addressModel);
 
     void update(String id, UserAddressModel addressModel);
+
+    void delete(String id);
 }
