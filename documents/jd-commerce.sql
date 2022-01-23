@@ -1730,7 +1730,7 @@ CREATE TABLE `orders` (
   `created_time` datetime NOT NULL COMMENT '创建时间（成交时间）',
   `updated_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表;';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of orders
@@ -1779,8 +1779,8 @@ CREATE TABLE `user_address` (
   `detail` varchar(128) NOT NULL COMMENT '详细地址',
   `extend` varchar(128) DEFAULT NULL COMMENT '扩展字段',
   `is_default` int(11) DEFAULT NULL COMMENT '是否默认地址',
-  `created_time` datetime NOT NULL COMMENT '创建时间',
-  `updated_time` datetime NOT NULL COMMENT '更新时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户地址表 ';
 
@@ -1788,8 +1788,8 @@ CREATE TABLE `user_address` (
 -- Records of user_address
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_address` VALUES ('190825CG3AA14Y3C', '1908189H7TNWDTXP', 'jack', '13333333333', '北京', '北京', '东城区', '123', NULL, 1, '2019-08-25 17:34:14', '2019-08-25 17:34:14');
-INSERT INTO `user_address` VALUES ('190825CG4ZCSSWM8', '1908189H7TNWDTXP', 'abc', '13666666666', '北京', '北京', '东城区', '345', NULL, 0, '2019-08-25 17:34:24', '2019-08-25 17:34:24');
+INSERT INTO `user_address` VALUES ('190825CG3AA14Y3C', 'bb2cb6b8-b333-40a3-a90c-0ed35e9121a2', '上海人', '13333333333', '上海', '上海', '浦东新区', 'XXX路XXX号', NULL, 1, '2019-08-25 17:34:14', '2019-08-25 17:34:14');
+INSERT INTO `user_address` VALUES ('190825CG4ZCSSWM8', 'bb2cb6b8-b333-40a3-a90c-0ed35e9121a2', '苏州人', '13666666666', '江苏', '苏州', '吴中区', 'XXX栋XXX号', NULL, 0, '2019-08-25 17:34:24', '2019-08-25 17:34:24');
 COMMIT;
 
 -- ----------------------------
