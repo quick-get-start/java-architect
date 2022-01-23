@@ -73,6 +73,9 @@ public class PassportController {
         userModel.setPassword(password);
         Users user = this.userService.save(userModel);
 
+        // todo 生成用户token，存入redis会话
+        // todo 同步购物车数据
+
         return JSONResult.ok("注册成功", userToResponse(user));
     }
 
@@ -95,6 +98,9 @@ public class PassportController {
 
         UserCommonResponse result = userToResponse(user);
         CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(result), true);
+
+        // todo 生成用户token，存入redis会话
+        // todo 同步购物车数据
 
         return JSONResult.ok("登录成功", result);
     }
