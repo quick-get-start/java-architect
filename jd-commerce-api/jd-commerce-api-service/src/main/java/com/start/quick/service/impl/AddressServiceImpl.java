@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,6 +49,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void update(String id, UserAddressModel addressModel) {
-
+        UserAddress entity = this.addressRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        BeanUtils.copyProperties(addressModel, entity);
     }
 }

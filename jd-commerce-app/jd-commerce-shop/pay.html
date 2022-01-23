@@ -801,9 +801,8 @@
 							});
 					} else {
 						axios.post(
-							serverUrl + '/address/update', 
+							serverUrl + '/address/update/' + addressId, 
 							{
-								"addressId": addressId,
 								"userId": userInfo.id,
 								"receiver": receiver,
 								"mobile": mobile,
@@ -819,10 +818,10 @@
 								}
 							})
 							.then(res => {
-								if (res.data.status == 200) {
+								if (res.data.code == 0) {
 									this.closeAddressDialog();
 									this.renderUserAddressList();
-								} else if (res.data.status == 500) {
+								} else {
 									alert(res.data.msg);
 								}
 							});

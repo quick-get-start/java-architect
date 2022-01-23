@@ -35,4 +35,11 @@ public class AddressController {
         this.addressService.save(addressModel);
         return JSONResult.ok("用户地址创建成功");
     }
+
+    @PostMapping("update/{addressId}")
+    public JSONResult<Void> update(@PathVariable String addressId,
+                                   @RequestBody UserAddressModel addressModel) {
+        this.addressService.update(addressId, addressModel);
+        return JSONResult.ok("用户地址更新成功");
+    }
 }
