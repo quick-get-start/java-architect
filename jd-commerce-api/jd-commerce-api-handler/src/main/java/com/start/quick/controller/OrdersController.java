@@ -2,6 +2,7 @@ package com.start.quick.controller;
 
 import com.start.quick.code.OrderResultCode;
 import com.start.quick.common.JSONResult;
+import com.start.quick.entity.OrderStatus;
 import com.start.quick.entity.Orders;
 import com.start.quick.enums.CommonOrderStatus;
 import com.start.quick.model.OrderSubmitModel;
@@ -52,5 +53,11 @@ public class OrdersController {
         result.setAmount(order.getRealPayAmount());
         result.setQrCodeUrl("https://pay.weixin.qq.com/");
         return JSONResult.ok("查询支付二维码成功", result);
+    }
+
+    @GetMapping("status")
+    public JSONResult<OrderStatus> status(@RequestParam String orderId) {
+        OrderStatus result = this.orderService.findOrderStatusByOrderId(orderId);
+        return JSONResult.ok("查询订单状态成功", result);
     }
 }

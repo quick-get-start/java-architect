@@ -151,9 +151,7 @@
                     // 发起请求获得微信支付扫描二维码
                     var serverUrl = app.serverUrl;
 					axios.defaults.withCredentials = true;
-					axios.post(
-                            serverUrl + '/orders/getPaidOrderInfo?orderId=' + orderId, 
-							{},
+					axios.get(serverUrl + '/orders/status?orderId=' + orderId, {},
 							{
 								headers: {
 									'headerUserId': userInfo.id,
@@ -161,7 +159,7 @@
 								}
 							})
 							.then(res => {
-								if (res.data.status == 200) {
+								if (res.data.code == 0) {
                                     var orderStatus = res.data.data;
 
                                     if (orderStatus.orderStatus == 20) {

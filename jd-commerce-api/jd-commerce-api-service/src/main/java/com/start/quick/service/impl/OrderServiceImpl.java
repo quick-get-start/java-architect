@@ -117,4 +117,9 @@ public class OrderServiceImpl implements OrderService {
     public Orders findById(String orderId) {
         return this.ordersRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     }
+
+    @Override
+    public OrderStatus findOrderStatusByOrderId(String orderId) {
+        return this.orderStatusRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+    }
 }
