@@ -32,4 +32,8 @@ public interface ItemService {
     PageInfo<ItemsSearchModel> searchItemsByCategory(Integer categoryId, String sort, Integer page, Integer pageSize);
 
     List<ItemsCartModel> refreshItems(List<String> specIds);
+
+    ItemsSpec findItemSpecById(String specId);
+
+    String findItemMainImgById(String itemId);
 }

@@ -3,6 +3,7 @@ package com.start.quick.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.start.quick.domain.ItemCommentsViewModel;
+import com.start.quick.enums.YesOrNo;
 import com.start.quick.model.ItemsCartModel;
 import com.start.quick.model.ItemsSearchModel;
 import com.start.quick.domain.StatisticsViewModel;
@@ -125,5 +126,17 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemsCartModel> refreshItems(List<String> specIds) {
         return this.itemsRepository.refreshItems(specIds);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public ItemsSpec findItemSpecById(String specId) {
+        return this.itemsSpecRepository.findById(specId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String findItemMainImgById(String itemId) {
+        return this.itemsImgRepository.findTopByItemIdAndIsMain(itemId, YesOrNo.YES).orElseThrow(EntityNotFoundException::new).getUrl();
     }
 }

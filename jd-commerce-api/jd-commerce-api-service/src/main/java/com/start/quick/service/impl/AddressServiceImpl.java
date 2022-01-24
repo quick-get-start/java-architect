@@ -30,6 +30,12 @@ public class AddressServiceImpl implements AddressService {
         return this.addressRepository.findAllByUserId(userId);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public UserAddress findById(String addressId) {
+        return this.addressRepository.findById(addressId).orElseThrow(EntityNotFoundException::new);
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void save(UserAddressModel addressModel) {

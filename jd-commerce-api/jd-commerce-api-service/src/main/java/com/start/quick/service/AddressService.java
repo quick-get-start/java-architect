@@ -9,6 +9,8 @@ public interface AddressService {
 
     List<UserAddress> findAllByUserId(String userId);
 
+    UserAddress findById(String addressId);
+
     void save(UserAddressModel addressModel);
 
     void update(String id, UserAddressModel addressModel);
