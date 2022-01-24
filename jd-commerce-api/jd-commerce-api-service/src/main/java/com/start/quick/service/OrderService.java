@@ -4,5 +4,5 @@ import com.start.quick.model.OrderSubmitModel;
 
 public interface OrderService {
 
-    void create(OrderSubmitModel submitModel);
+    String create(OrderSubmitModel submitModel);
 }

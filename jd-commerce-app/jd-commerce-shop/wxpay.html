@@ -163,7 +163,6 @@
 							.then(res => {
 								if (res.data.status == 200) {
                                     var orderStatus = res.data.data;
-                                    // console.log(orderStatus);
 
                                     if (orderStatus.orderStatus == 20) {
                                         window.location.href = "success.html?orderId=" + orderId + "&orderAmount=" + this.paymentInfo.amount;
@@ -192,15 +191,12 @@
 								if (res.data.status == 200) {
                                     var paymentInfo = res.data.data;
                                     this.paymentInfo = paymentInfo;
-                                    // qrCodeUrl
-                                    // console.log(paymentInfo);
                                     
                                     $('#wxqrcode-display').qrcode({
                                         width: 200,
                                         height:200,
                                         text: paymentInfo.qrCodeUrl
                                     });
-
 
 								} else {
 									alert(res.data.msg);

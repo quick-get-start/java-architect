@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void create(OrderSubmitModel submitModel) {
+    public String create(OrderSubmitModel submitModel) {
         String userId = submitModel.getUserId();
         String addressId = submitModel.getAddressId();
         String specIds = submitModel.getSpecIds();
@@ -99,5 +99,7 @@ public class OrderServiceImpl implements OrderService {
         orderStatus.setOrderStatus(CommonOrderStatus.WAIT_PAY);
         orderStatus.setCreateTime(new Date());
         this.orderStatusRepository.save(orderStatus);
+
+        return order.getId();
     }
 }
