@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -101,5 +102,19 @@ public class OrderServiceImpl implements OrderService {
         this.orderStatusRepository.save(orderStatus);
 
         return order.getId();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateOrderStatus(String orderId, Integer status) {
+        OrderStatus orderStatus = this.orderStatusRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+        orderStatus.setOrderStatus(status);
+        orderStatus.setPayTime(new Date());
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public Orders findById(String orderId) {
+        return this.ordersRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     }
 }
