@@ -87,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
             subOrder.setPrice(itemSpec.getPriceDiscount());
             this.orderItemsRepository.save(subOrder);
 
-            // todo: 用户提交订单后，规格表后需要扣除库存
+            this.itemService.decreaseItemSpecStock(specId, buyCounts);
         }
 
         order.setTotalAmount(totalAmount);

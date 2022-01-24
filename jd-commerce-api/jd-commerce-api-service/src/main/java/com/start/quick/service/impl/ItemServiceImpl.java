@@ -139,4 +139,20 @@ public class ItemServiceImpl implements ItemService {
     public String findItemMainImgById(String itemId) {
         return this.itemsImgRepository.findTopByItemIdAndIsMain(itemId, YesOrNo.YES).orElseThrow(EntityNotFoundException::new).getUrl();
     }
+
+    /**
+     * synchronized 不推荐使用 集群下无用 性能低下
+     * 数据库锁 不推荐 导致数据库性能低下
+     * 分布式锁 zookeeper redis
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void decreaseItemSpecStock(String specId, int buyCounts) {
+        // lockUtil.getLock();  -- 加锁
+        int result = this.itemsMapper.decreaseItemSpecStock(specId, buyCounts);
+        if (result != 1) {
+            throw new RuntimeException("库存不足!");
+        }
+        // lockUtil.unLock();  -- 解锁
+    }
 }
