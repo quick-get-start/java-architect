@@ -1,24 +1,21 @@
 window.app = {
     /* 开发环境 */
-    serverUrl: "http://localhost:8081/api",                                   // 接口服务接口地址
-    paymentServerUrl: "http://192.168.1.3:8089",                              // 支付中心服务地址
-    shopServerUrl: "http://localhost:8081/jd-commerce-shop/",                 // 门户网站地址
-    centerServerUrl: "http://localhost:8081/jd-commerce-center/",             // 用户中心地址
-    cookieDomain: "",                                                         // cookie 域
+    serverUrl: "http://localhost:8081/api", // 接口服务接口地址
+    shopServerUrl: "http://localhost:8081/jd-commerce-shop/", // 门户网站地址
+    centerServerUrl: "http://localhost:8081/jd-commerce-center/", // 用户中心地址
+    cookieDomain: "", // cookie 域
 
-    ctx: "/foodie-shop",
-
-    getCookie: function (cname) {
+    getCookie: function(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             // console.log(c)
             while (c.charAt(0) == ' ') c = c.substring(1);
-                if (c.indexOf(name) != -1){
-                    return c.substring(name.length, c.length);
-                }
+            if (c.indexOf(name) != -1) {
+                return c.substring(name.length, c.length);
             }
+        }
         return "";
     },
 
@@ -28,9 +25,9 @@ window.app = {
 
     setCookie: function(name, value) {
         var Days = 365;
-        var exp = new Date(); 
-        exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        var cookieContent = name + "="+ encodeURIComponent (value) + ";path=/;";
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        var cookieContent = name + "=" + encodeURIComponent(value) + ";path=/;";
         if (this.cookieDomain != null && this.cookieDomain != undefined && this.cookieDomain != '') {
             cookieContent += "domain=" + this.cookieDomain;
         }
@@ -47,18 +44,19 @@ window.app = {
     },
 
     getUrlParam(paramName) {
-        var reg = new RegExp("(^|&)" + paramName + "=([^&]*)(&|$)");    //构造一个含有目标参数的正则表达式对象
-        var r = window.location.search.substr(1).match(reg);            //匹配目标参数
-        if (r != null) return decodeURI(r[2]); return null;             //返回参数值
+        var reg = new RegExp("(^|&)" + paramName + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return decodeURI(r[2]);
+        return null; //返回参数值
     },
 
     /**
-	 * 构建购物车商品对象
-	 */
-	ShopcartItem: function(itemId, itemImgUrl, itemName, specId, specName, buyCounts, priceDiscount, priceNormal) {
-		this.itemId = itemId;
-		this.itemImgUrl = itemImgUrl;
-		this.itemName = itemName;
+     * 构建购物车商品对象
+     */
+    ShopcartItem: function(itemId, itemImgUrl, itemName, specId, specName, buyCounts, priceDiscount, priceNormal) {
+        this.itemId = itemId;
+        this.itemImgUrl = itemImgUrl;
+        this.itemName = itemName;
         this.specId = specId;
         this.specName = specName;
         this.buyCounts = buyCounts;
@@ -82,7 +80,7 @@ window.app = {
 
             var isHavingItem = false;
             // 如果添加的商品已经存在与购物车中，则购物车中已经存在的商品数量累加新增的
-            for(var i = 0 ; i < foodieShopcart.length ; i ++) {
+            for (var i = 0; i < foodieShopcart.length; i++) {
                 var tmpItem = foodieShopcart[i];
                 var specId = tmpItem.specId;
                 if (specId == pendingItem.specId) {
@@ -92,7 +90,7 @@ window.app = {
                     // 删除主图在数组中的位置
                     foodieShopcart.splice(i, 1, tmpItem);
                 }
-            }   
+            }
             if (!isHavingItem) {
                 foodieShopcart.push(pendingItem);
             }

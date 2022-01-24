@@ -4,7 +4,7 @@
     position: relative;
     background-color: #FFE;
     border-color: #FC7;
-    font: 16px/1.5 tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;
+    font: 16px/1.5 tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
     text-align: center;
 }
 
@@ -14,7 +14,7 @@
     position: relative;
     background-color: #fffdee;
     border-color: #FC7;
-    font: 12px/1.5 tahoma,arial,"Hiragino Sans GB",宋体,sans-serif;
+    font: 12px/1.5 tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
     text-align: center;
     color: #f70;
     vertical-align: middle;
@@ -29,7 +29,7 @@
     background-color: #e74649;
     height: 25px;
     line-height: 25px;
-    font-family: arial,"Microsoft YaHei";
+    font-family: arial, "Microsoft YaHei";
     border-radius: 3px;
     color: #fff;
     font-size: 12px;
