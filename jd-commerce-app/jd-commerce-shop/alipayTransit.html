@@ -21,31 +21,19 @@
                         <img src="images/logobig.png" alt="慕课网 - 天天吃货" />
                     </div>
                     <div class="ep-order-status">
-                        <!-- <h1>订单支付</h1> -->
                         <span class="page-title">订单支付</span>
                     </div>
                 </div>
                 <div class="user-info">
-                    <p>账号：{{ userInfo.nickname }}</p>
+                    <p>账号：{{ userInfo.nickName }}</p>
                 </div>
             </div>
         </div>
         <div class="bd">
             <div class="bd-main">
                 <div class="ep-wrapper">
-                    <div class="ep-pay-step ep-step-channel bd-main-container" style="padding: 30px 270px 30px 250px;display: block;">
+                    <div class="ep-pay-step ep-step-channel bd-main-container" style="padding: 30px 200px;display: block;">
                         <div class="ep-order-detail">
-                            <!-- <div>
-                                <div class="ep-order-tit">
-                                    <dl>
-                                        <dt>商品订单：</dt>
-                                        <dd>{{orderId}}</dd>
-                                    </dl>
-                                </div>
-                                <div class="ep-order-tit">
-                                    <span>支付金额：<em class="rmb"><i>¥</i>{{paymentInfo.amount / 100}}</em></span>
-                                </div>
-                            </div> -->
                             <div>
                                 <img src="img/loading.gif" style="height:90px;" />
                                 <span class="hit-words">订单[<em style="color: #0ac265">{{orderId}}</em>]正在支付中，请耐心等待...</span>
@@ -78,14 +66,11 @@
         data: {
             userIsLogin: false,
             userInfo: {},
-
             orderId: null,
             paymentInfo: [],
-
-            alipayForm: "",
+            alipayForm: ""
         },
         created() {
-            // var me = this;
             // 通过cookie判断用户是否登录
             this.judgeUserLoginStatus();
 
@@ -105,22 +90,13 @@
             getAliPayForm(orderId) {
                 var userInfo = this.userInfo;
 
-                // 发起请求获得微信支付扫描二维码
-                var paymentServerUrl = app.paymentServerUrl;
+                // 发起请求获得支付宝支付
+                var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
-                axios.post(
-                        paymentServerUrl + '/payment/goAlipay?merchantUserId=' + userInfo.id + "&merchantOrderId=" + orderId, {}, {
-                            headers: {
-                                'imoocUserId': "123",
-                                'password': "123"
-                            }
-                        })
+                axios.get(serverUrl + '/orders/payment/alipay?orderId=' + orderId, {}, {})
                     .then(res => {
-                        if (res.data.status == 200) {
+                        if (res.data.code == 0) {
                             var alipayForm = res.data.data;
-                            console.log(alipayForm);
-                            // this.alipayForm = alipayForm;
-
                             document.write(alipayForm);
                         } else {
                             alert(res.data.msg);
@@ -146,7 +122,6 @@
                         // 判断是否是一个对象
                         if (typeof(userInfo) == "object") {
                             this.userIsLogin = true;
-                            // console.log(userInfo);
                             this.userInfo = userInfo;
                         } else {
                             this.userIsLogin = false;

@@ -1,5 +1,5 @@
 <!DOCTYPE html
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -69,7 +69,7 @@
                     <ul>
                         <span v-show="addressList.length > 0">
                             <!-- <block v-for="(address, aindex) in addressList" :key="aindex">
-								<div class="per-border"></div> -->
+                                <div class="per-border"></div> -->
                             <!-- <li class="user-addresslist " v-for="(address, aindex) in addressList" :key="aindex" style="margin-top: 6px;"> -->
                             <li :class="['user-addresslist', {'defaultAddr' : address.id == choosedAddressId}]" v-for="(address, aindex) in addressList" :key="aindex" @click="chooseAddress(address.id)" style="margin-top: 6px;">
                                 <!-- <li :class="['user-addresslist', {'DefaultAddr' : address.isDefault == 1}]"> -->
@@ -116,8 +116,6 @@
                     <h3>选择支付方式</h3>
                     <ul class="pay-list">
                         <li class="" @click="choosePayMethod(1)" style="width: 180px;height:40px;padding:3px;"><img src="img/wxpay.png" /><span></span></li>
-                        <!-- <li class="pay qq" @click="choosePayMethod(1)"><img src="images/weizhifu.jpg"/>微信<span></span></li> -->
-                        <!-- <li class="pay taobao" @click="choosePayMethod(2)"><img src="images/zhifubao.jpg"/>支付宝<span></span></li> -->
                         <li class="" @click="choosePayMethod(2)" style="width: 180px;height:40px;padding:3px;"><img src="img/alipay.png" /><span></span></li>
                     </ul>
                 </div>
@@ -343,21 +341,12 @@
                     </div>
                 </form>
             </div>
-            <!-- <input type="hidden" id="hiddenOrderId" :value="orderId"/>
-			<a href="" id="alipayLink" target="_blank"></a> -->
         </div>
         <div class="clear"></div>
     </div>
     <script type="text/javascript " src="js/app.js"></script>
     <script type="text/javascript " src="js/cities.js"></script>
     <script type="text/javascript">
-    // $(document).ready(function(){
-    // 	$("#alipayLink").one("click",function(){
-    // 		var orderId = $("#hiddenOrderId").val();
-    // 		debugger;
-    // 		window.open('alipayTempTransit.html?orderId='+orderId);
-    // 	});
-    // });
     var index = new Vue({
         el: "#pay",
         data: {
@@ -439,9 +428,6 @@
                     window.location.href = app.centerServerUrl;
                 }
             },
-            // goAlipay() {
-            //     window.open("alipayTempTransit.html?orderId=" + this.orderId);
-            // },
             choosePayMethod(payMethod) {
                 this.choosedPayMethod = payMethod;
 
@@ -478,11 +464,8 @@
                     return;
                 }
 
-                // var newWindow = window.open();
-
                 // 买家备注可以为空
                 var orderRemarker = this.orderRemarker;
-                // console.log(orderRemarker);
 
                 var userInfo = this.userInfo;
                 var serverUrl = app.serverUrl;
@@ -511,8 +494,8 @@
                                 this.orderId = orderId;
 
                                 // 支付宝支付直接跳转
+                                window.open("alipayTransit.html?orderId=" + orderId, "_blank");
                                 window.location.href = "alipay.html?orderId=" + orderId + "&amount=" + this.totalAmount;
-                                window.open("alipayTempTransit.html?orderId=" + orderId);
                             } else {
                                 alert("目前只支持微信或支付宝支付！");
                             }
@@ -616,9 +599,6 @@
             // 选择地址，切换选中效果
             chooseAddress(choosedAddressId) {
                 this.choosedAddressId = choosedAddressId;
-                // this.defaultAddressId = choosedAddressId;
-                // console.log("this.defaultAddressId:" + this.defaultAddressId);
-                // console.log("this.choosedAddressId:" + this.choosedAddressId);
 
                 // 确认地址动态改变
                 this.renderConfirmAddress(choosedAddressId);

@@ -55,6 +55,12 @@ public class OrdersController {
         return JSONResult.ok("查询支付二维码成功", result);
     }
 
+    @GetMapping("payment/alipay")
+    public JSONResult<String> alipayPayment(@RequestParam String orderId) {
+        return JSONResult.ok("支付宝支付脚本查询成功", "<form method=\"get\" action=\"https://opendocs.alipay.com/open\"></form>\n" +
+                "<script type=\"text/javascript\">document.forms[0].submit();</script>");
+    }
+
     @GetMapping("status")
     public JSONResult<OrderStatus> status(@RequestParam String orderId) {
         OrderStatus result = this.orderService.findOrderStatusByOrderId(orderId);
