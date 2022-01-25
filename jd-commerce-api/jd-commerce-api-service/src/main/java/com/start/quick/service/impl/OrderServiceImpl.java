@@ -10,16 +10,22 @@ import com.start.quick.repository.OrdersRepository;
 import com.start.quick.service.AddressService;
 import com.start.quick.service.ItemService;
 import com.start.quick.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrdersRepository ordersRepository;
     private final OrderItemsRepository orderItemsRepository;
@@ -118,8 +124,26 @@ public class OrderServiceImpl implements OrderService {
         return this.ordersRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public OrderStatus findOrderStatusByOrderId(String orderId) {
         return this.orderStatusRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void closeOrders() {
+        // 查询所有未付款订单，判断时间是否超时(1天)，超时则关闭交易
+        List<OrderStatus> list = this.orderStatusRepository.findAllByOrderStatus(CommonOrderStatus.WAIT_PAY);
+        for (OrderStatus orderStatus : list) {
+            Date createTime = orderStatus.getCreateTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
+            if (createTime.before(calendar.getTime())) {
+                logger.info("订单已超时1天未付款，关闭订单 {}", orderStatus.getOrderId());
+                orderStatus.setOrderStatus(CommonOrderStatus.CLOSE);
+                orderStatus.setCloseTime(new Date());
+            }
+        }
     }
 }

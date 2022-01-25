@@ -13,4 +13,6 @@ public interface OrderService {
     Orders findById(String orderId);
 
     OrderStatus findOrderStatusByOrderId(String orderId);
+
+    void closeOrders();
 }
