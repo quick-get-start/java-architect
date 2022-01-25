@@ -1,5 +1,10 @@
 package com.start.quick.http;
 
+import com.start.quick.entity.Users;
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class UserCommonResponse {
 
     private String id;
@@ -28,6 +33,21 @@ public class UserCommonResponse {
      * 性别 0:女 1:男 2:保密
      */
     private Integer sex;
+
+    /**
+     * 生日
+     */
+    private Calendar birthday;
+
+    /**
+     * 手机号
+     */
+    private String mobile;
+
+    /**
+     * 邮箱地址
+     */
+    private String email;
 
     public String getId() {
         return id;
@@ -75,5 +95,43 @@ public class UserCommonResponse {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Calendar birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public static UserCommonResponse userToResponse(Users user) {
+        UserCommonResponse response = new UserCommonResponse();
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setNickName(user.getNickName());
+        response.setRealName(user.getRealName());
+        response.setAvatar(user.getAvatar());
+        response.setSex(user.getSex());
+        response.setBirthday(user.getBirthday());
+        response.setMobile(user.getMobile());
+        response.setEmail(user.getEmail());
+        return response;
     }
 }

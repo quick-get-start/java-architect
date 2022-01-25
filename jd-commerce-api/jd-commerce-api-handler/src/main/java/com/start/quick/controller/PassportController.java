@@ -76,7 +76,7 @@ public class PassportController {
         // todo 生成用户token，存入redis会话
         // todo 同步购物车数据
 
-        return JSONResult.ok("注册成功", userToResponse(user));
+        return JSONResult.ok("注册成功", UserCommonResponse.userToResponse(user));
     }
 
     @PostMapping("login")
@@ -96,7 +96,7 @@ public class PassportController {
             return JSONResult.build(PassportResultCode.WRONG_USERNAME_PASSWORD, "用户名或密码不正确");
         }
 
-        UserCommonResponse result = userToResponse(user);
+        UserCommonResponse result = UserCommonResponse.userToResponse(user);
         CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(result), true);
 
         // todo 生成用户token，存入redis会话
@@ -115,16 +115,5 @@ public class PassportController {
         // TODO 分布式会话中需要清楚用户数据
 
         return JSONResult.ok("注销成功");
-    }
-
-    private UserCommonResponse userToResponse(Users user) {
-        UserCommonResponse response = new UserCommonResponse();
-        response.setId(user.getId());
-        response.setUsername(user.getUsername());
-        response.setNickName(user.getNickName());
-        response.setRealName(user.getRealName());
-        response.setAvatar(user.getAvatar());
-        response.setSex(user.getSex());
-        return response;
     }
 }
