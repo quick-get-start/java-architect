@@ -220,7 +220,7 @@
             saveUserInfo() {
                 var userInfoMore = this.userInfoMore;
 
-                var nickname = userInfoMore.nickname;
+                var nickname = userInfoMore.nickName;
                 if (nickname == null || nickname == "" || nickname == undefined) {
                     alert("昵称不能为空");
                     return;
@@ -230,7 +230,7 @@
                     return;
                 }
 
-                var realname = userInfoMore.realname;
+                var realname = userInfoMore.realName;
                 if (realname != null && realname != "" && realname != undefined) {
                     if (realname.length > 12) {
                         alert("真实姓名长度不能超过12位");
@@ -267,24 +267,18 @@
                 // 请求后端获得最新数据
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
-                axios.post(
-                        serverUrl + '/userInfo/update?userId=' + userInfo.id,
-                        userInfoMore, {
-                            headers: {
-                                'headerUserId': userInfo.id,
-                                'headerUserToken': userInfo.userUniqueToken
-                            }
-                        })
+                axios.post(serverUrl + '/userInfo/update?userId=' + userInfo.id, userInfoMore, {
+                        headers: {
+                            'headerUserId': userInfo.id,
+                            'headerUserToken': userInfo.userUniqueToken
+                        }
+                    })
                     .then(res => {
-                        if (res.data.status == 200) {
-                            // var userInfoMore = res.data.data;
-                            // console.log(userInfoMore);
+                        if (res.data.code == 0) {
                             alert("用户信息修改成功!");
-
                             window.location.reload();
                         } else {
                             alert(res.data.msg);
-                            console.log(res.data.msg);
                         }
                     });
             },
@@ -322,7 +316,6 @@
                     userCookie != ""
                 ) {
                     var userInfoStr = decodeURIComponent(userCookie);
-                    // console.log(userInfoStr);
                     if (
                         userInfoStr != null &&
                         userInfoStr != undefined &&

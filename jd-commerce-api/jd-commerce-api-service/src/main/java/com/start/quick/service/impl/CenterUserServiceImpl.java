@@ -23,4 +23,16 @@ public class CenterUserServiceImpl implements CenterUserService {
     public Users findById(String userId) {
         return this.userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateUserInfo(String userId, Users user) {
+        Users entity = this.findById(userId);
+        entity.setNickName(user.getNickName());
+        entity.setRealName(user.getRealName());
+        entity.setSex(user.getSex());
+        entity.setBirthday(user.getBirthday());
+        entity.setMobile(user.getMobile());
+        entity.setEmail(user.getEmail());
+    }
 }
