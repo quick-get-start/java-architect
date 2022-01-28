@@ -39,7 +39,7 @@
                         <div class="user-infoPic">
                             <div class="filePic">
                                 <input type="file" id="userFace" @change="uploadFace" class="inputPic" allowexts="jpeg,jpg,png,gif" accept="image/gif,image/jpeg,image/jpg,image/png">
-                                <img class="am-circle am-img-thumbnail" :src="userInfo.face" alt="" />
+                                <img class="am-circle am-img-thumbnail" :src="userInfo.avatar" alt="用户头像" />
                             </div>
                             <p class="am-form-help">头像</p>
                             <div class="info-m">
@@ -195,7 +195,7 @@
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
                 axios.post(
-                        serverUrl + '/userInfo/uploadFace?userId=' + userInfo.id,
+                        serverUrl + '/userInfo/updateAvatar?userId=' + userInfo.id,
                         multiForm, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
@@ -204,15 +204,11 @@
                             }
                         })
                     .then(res => {
-                        if (res.data.status == 200) {
-                            // var userInfoMore = res.data.data;
-                            // console.log(userInfoMore);
+                        if (res.data.code == 0) {
                             alert("头像上传成功!");
-
                             window.location.reload();
                         } else {
                             alert(res.data.msg);
-                            console.log(res.data.msg);
                         }
                     });
             },
