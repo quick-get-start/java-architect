@@ -13,7 +13,7 @@ public interface OrderService {
 
     String create(OrderSubmitModel submitModel);
 
-    OrderStatus updateOrderStatus(String orderId, Integer status);
+    OrderStatus updatePayStatus(String orderId);
 
     Orders findById(String orderId);
 

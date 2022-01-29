@@ -6,7 +6,6 @@ import com.start.quick.code.OrderResultCode;
 import com.start.quick.common.JSONResult;
 import com.start.quick.entity.OrderStatus;
 import com.start.quick.entity.Orders;
-import com.start.quick.enums.CommonOrderStatus;
 import com.start.quick.model.OrderModel;
 import com.start.quick.model.OrderSubmitModel;
 import com.start.quick.model.WechatPaymentModel;
@@ -40,7 +39,7 @@ public class OrdersController {
             return JSONResult.build(OrderResultCode.INVALID_REQUEST_PARAM, "订单不存在");
         }
 
-        this.orderService.updateOrderStatus(orderId, CommonOrderStatus.WAIT_DELIVER);
+        this.orderService.updatePayStatus(orderId);
         return JSONResult.ok("支付成功");
     }
 
