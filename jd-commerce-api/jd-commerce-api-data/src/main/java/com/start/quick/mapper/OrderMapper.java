@@ -1,9 +1,8 @@
 package com.start.quick.mapper;
 
-import com.start.quick.domain.OrderViewModel;
+import com.start.quick.model.OrderModel;
 import com.start.quick.mapper.provider.OrderProvider;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -11,5 +10,8 @@ import java.util.List;
 public interface OrderMapper {
 
     @SelectProvider(type = OrderProvider.class, method = "findAll")
-    List<OrderViewModel> findAll(String userId, Integer status);
+    @Results({
+            @Result(column = "orderId", property = "items", many = @Many(select = "com.start.quick.mapper.OrderItemMapper.findAllByOrderId"))
+    })
+    List<OrderModel> findAll(String userId, Integer status);
 }

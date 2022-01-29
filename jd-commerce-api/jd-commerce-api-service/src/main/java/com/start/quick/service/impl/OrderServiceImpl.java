@@ -1,9 +1,7 @@
 package com.start.quick.service.impl;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.start.quick.domain.OrderViewModel;
 import com.start.quick.entity.*;
 import com.start.quick.enums.CommonOrderStatus;
 import com.start.quick.enums.YesOrNo;
@@ -23,7 +21,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -159,27 +160,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageInfo<OrderModel> pageAll(String userId, Integer status, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        List<OrderViewModel> content = this.orderMapper.findAll(userId, status);
-        Page<OrderViewModel> pageInfo = (Page<OrderViewModel>) content;
-
-        Map<String, OrderModel> map = new HashMap<>();
-        for (OrderViewModel item : pageInfo) {
-            OrderModel order = map.get(item.getOrderId());
-            if (order == null) {
-                order = new OrderModel(item.getOrderId(), item.getCreateTime(), item.getPayMethod(), item.getRealPayAmount(), item.getPostAmount(), item.getOrderStatus());
-            }
-            order.getItems().add(new OrderModel.ItemModel(item.getItemId(), item.getItemName(), item.getItemImg(), item.getItemSpecId(), item.getItemSpecName(), item.getBuyCounts(), item.getPrice()));
-            map.put(order.getOrderId(), order);
-        }
-
-        PageInfo<OrderModel> result = new PageInfo<>(new ArrayList<>(map.values()));
-        result.setTotal(pageInfo.getTotal());
-        result.setPageNum(pageInfo.getPageNum());
-        result.setPageSize(pageInfo.getPageSize());
-        result.setPages(pageInfo.getPages());
-        result.setStartRow(pageInfo.getStartRow());
-        result.setEndRow(pageInfo.getEndRow());
-        result.calcByNavigatePages(8);
-        return result;
+        List<OrderModel> content = this.orderMapper.findAll(userId, status);
+        return new PageInfo<>(content);
     }
 }

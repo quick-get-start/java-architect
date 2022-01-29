@@ -14,9 +14,6 @@ import com.start.quick.service.OrderService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 @RequestMapping("orders")
 public class OrdersController {
@@ -28,9 +25,7 @@ public class OrdersController {
     }
 
     @PostMapping("create")
-    public JSONResult<String> create(@RequestBody OrderSubmitModel submitModel,
-                                   HttpServletRequest request,
-                                   HttpServletResponse response) {
+    public JSONResult<String> create(@RequestBody OrderSubmitModel submitModel) {
         String orderId = this.orderService.create(submitModel);
 
         // todo: 整合redis后，需要移除购物车中的已结算商品，并且同步到前端的cookie
@@ -59,7 +54,7 @@ public class OrdersController {
     }
 
     @GetMapping("payment/alipay")
-    public JSONResult<String> alipayPayment(@RequestParam String orderId) {
+    public JSONResult<String> alipayPayment() {
         return JSONResult.ok("支付宝支付脚本查询成功", "<form method=\"get\" action=\"https://opendocs.alipay.com/open\"></form>\n" +
                 "<script type=\"text/javascript\">document.forms[0].submit();</script>");
     }
