@@ -43,7 +43,7 @@ public class CenterUserController {
             String suffix = arr[arr.length - 1];
             String name = "face-" + userId + "." + suffix;
 
-            String filePath = fileUploadProperties.getImageUserLocation() + File.separator + userId + File.separator + name;
+            String filePath = fileUploadProperties.getImageUserLocation() + userId + File.separator + name;
             File avatar = new File(filePath);
             if (avatar.getParentFile() != null) {
                 //noinspection ResultOfMethodCallIgnored
