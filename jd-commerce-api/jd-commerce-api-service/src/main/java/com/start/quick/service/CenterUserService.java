@@ -2,6 +2,7 @@ package com.start.quick.service;
 
 import com.start.quick.entity.Users;
 
+@SuppressWarnings("UnusedReturnValue")
 public interface CenterUserService {
 
     Users findById(String userId);

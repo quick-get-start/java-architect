@@ -38,7 +38,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void save(UserAddressModel addressModel) {
+    public UserAddress save(UserAddressModel addressModel) {
         int isDefault = YesOrNo.NO;
         List<UserAddress> addresses = this.findAllByUserId(addressModel.getUserId());
         if (CollectionUtils.isEmpty(addresses)) {
@@ -50,29 +50,32 @@ public class AddressServiceImpl implements AddressService {
         address.setId(UUID.randomUUID().toString());
         address.setIsDefault(isDefault);
         this.addressRepository.save(address);
+        return address;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void update(String id, UserAddressModel addressModel) {
+    public UserAddress update(String id, UserAddressModel addressModel) {
         UserAddress entity = this.addressRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         BeanUtils.copyProperties(addressModel, entity);
+        return entity;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void delete(String id) {
-        this.addressRepository.deleteById(id);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Override
-    public void setDefault(String userId, String addressId) {
+    public UserAddress setDefault(String userId, String addressId) {
         List<UserAddress> addresses = this.addressRepository.findAllByUserIdAndIsDefault(userId, YesOrNo.YES);
         for (UserAddress address : addresses) {
             address.setIsDefault(YesOrNo.NO);
         }
         UserAddress address = this.addressRepository.findById(addressId).orElseThrow(EntityNotFoundException::new);
         address.setIsDefault(YesOrNo.YES);
+        return address;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteById(String id) {
+        this.addressRepository.deleteById(id);
     }
 }

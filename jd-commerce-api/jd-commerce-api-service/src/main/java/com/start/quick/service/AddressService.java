@@ -5,17 +5,18 @@ import com.start.quick.model.UserAddressModel;
 
 import java.util.List;
 
+@SuppressWarnings("UnusedReturnValue")
 public interface AddressService {
 
     List<UserAddress> findAllByUserId(String userId);
 
     UserAddress findById(String addressId);
 
-    void save(UserAddressModel addressModel);
+    UserAddress save(UserAddressModel addressModel);
 
-    void update(String id, UserAddressModel addressModel);
+    UserAddress update(String id, UserAddressModel addressModel);
 
-    void delete(String id);
+    UserAddress setDefault(String userId, String addressId);
 
-    void setDefault(String userId, String addressId);
+    void deleteById(String id);
 }

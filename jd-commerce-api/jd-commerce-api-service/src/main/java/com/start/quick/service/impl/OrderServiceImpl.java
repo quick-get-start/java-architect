@@ -112,10 +112,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void updateOrderStatus(String orderId, Integer status) {
+    public OrderStatus updateOrderStatus(String orderId, Integer status) {
         OrderStatus orderStatus = this.orderStatusRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
         orderStatus.setOrderStatus(status);
         orderStatus.setPayTime(new Date());
+        return orderStatus;
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -132,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void closeOrders() {
+    public List<OrderStatus> closeOrders() {
         // 查询所有未付款订单，判断时间是否超时(1天)，超时则关闭交易
         List<OrderStatus> list = this.orderStatusRepository.findAllByOrderStatus(CommonOrderStatus.WAIT_PAY);
         for (OrderStatus orderStatus : list) {
@@ -145,5 +146,6 @@ public class OrderServiceImpl implements OrderService {
                 orderStatus.setCloseTime(new Date());
             }
         }
+        return list;
     }
 }

@@ -45,7 +45,7 @@ public class AddressController {
 
     @DeleteMapping("delete")
     public JSONResult<Void> update(@RequestParam String addressId) {
-        this.addressService.delete(addressId);
+        this.addressService.deleteById(addressId);
         return JSONResult.ok("用户地址删除成功");
     }
 
