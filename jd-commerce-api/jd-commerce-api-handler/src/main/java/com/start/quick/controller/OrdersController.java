@@ -43,6 +43,16 @@ public class OrdersController {
         return JSONResult.ok("支付成功");
     }
 
+    @PostMapping("deliver/{orderId}")
+    public JSONResult<Void> deliver(@PathVariable String orderId) {
+        if (StringUtils.isBlank(orderId)) {
+            return JSONResult.build(OrderResultCode.INVALID_REQUEST_PARAM, "订单不存在");
+        }
+
+        this.orderService.updateDeliverStatus(orderId);
+        return JSONResult.ok("支付成功");
+    }
+
     @GetMapping("payment/wechat")
     public JSONResult<WechatPaymentModel> wechatPayment(@RequestParam String orderId) {
         Orders order = this.orderService.findById(orderId);

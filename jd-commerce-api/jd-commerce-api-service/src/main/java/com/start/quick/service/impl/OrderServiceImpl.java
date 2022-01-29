@@ -120,9 +120,18 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public OrderStatus updatePayStatus(String orderId) {
-        OrderStatus orderStatus = this.orderStatusRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+        OrderStatus orderStatus = this.findOrderStatusByOrderId(orderId);
         orderStatus.setOrderStatus(CommonOrderStatus.WAIT_DELIVER);
         orderStatus.setPayTime(new Date());
+        return orderStatus;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public OrderStatus updateDeliverStatus(String orderId) {
+        OrderStatus orderStatus = this.findOrderStatusByOrderId(orderId);
+        orderStatus.setOrderStatus(CommonOrderStatus.WAIT_RECEIVE);
+        orderStatus.setDeliverTime(new Date());
         return orderStatus;
     }
 

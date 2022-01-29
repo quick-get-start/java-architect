@@ -15,6 +15,8 @@ public interface OrderService {
 
     OrderStatus updatePayStatus(String orderId);
 
+    OrderStatus updateDeliverStatus(String orderId);
+
     Orders findById(String orderId);
 
     OrderStatus findOrderStatusByOrderId(String orderId);
