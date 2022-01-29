@@ -26,7 +26,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void updateUserInfo(String userId, Users user) {
+    public Users updateUserInfo(String userId, Users user) {
         Users entity = this.findById(userId);
         entity.setNickName(user.getNickName());
         entity.setRealName(user.getRealName());
@@ -34,5 +34,14 @@ public class CenterUserServiceImpl implements CenterUserService {
         entity.setBirthday(user.getBirthday());
         entity.setMobile(user.getMobile());
         entity.setEmail(user.getEmail());
+        return entity;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public Users updateUserAvatar(String userId, String avatarUrl) {
+        Users entity = this.findById(userId);
+        entity.setAvatar(avatarUrl);
+        return entity;
     }
 }

@@ -32,7 +32,9 @@ public class CenterUserController {
 
     @PostMapping("updateAvatar")
     public JSONResult<Void> updateAvatar(@RequestParam String userId,
-                                         MultipartFile file) {
+                                         MultipartFile file,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response) {
         if (ObjectUtils.isEmpty(file)) {
             return JSONResult.build(CenterUserResultCode.INVALID_REQUEST_PARAM, "文件不能为空!");
         }
@@ -41,6 +43,13 @@ public class CenterUserController {
         if (StringUtils.isNotBlank(fileName)) {
             String[] arr = fileName.split("\\.");
             String suffix = arr[arr.length - 1];
+
+            if (!StringUtils.equalsIgnoreCase(suffix, "png")
+                    && !StringUtils.equalsIgnoreCase(suffix, "jpg")
+                    && !StringUtils.equalsIgnoreCase(suffix, "jpeg")) {
+                return JSONResult.build(CenterUserResultCode.INVALID_REQUEST_PARAM, "图片格式不正确!");
+            }
+
             String name = "face-" + userId + "." + suffix;
 
             String filePath = fileUploadProperties.getImageUserLocation() + userId + File.separator + name;
@@ -56,6 +65,12 @@ public class CenterUserController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            String avatarUrl = String.format("/api/%s/%s?time=%s", userId, name, System.currentTimeMillis());
+
+            Users user = this.centerUserService.updateUserAvatar(userId, avatarUrl);
+            UserCommonResponse result = UserCommonResponse.userToResponse(user);
+            CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(result), true);
         }
 
         return JSONResult.ok("头像更新成功");

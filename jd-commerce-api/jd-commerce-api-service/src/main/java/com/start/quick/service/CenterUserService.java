@@ -6,5 +6,7 @@ public interface CenterUserService {
 
     Users findById(String userId);
 
-    void updateUserInfo(String userId, Users user);
+    Users updateUserInfo(String userId, Users user);
+
+    Users updateUserAvatar(String userId, String avatarUrl);
 }
