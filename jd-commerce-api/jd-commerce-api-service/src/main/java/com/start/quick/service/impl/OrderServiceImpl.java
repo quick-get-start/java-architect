@@ -1,8 +1,14 @@
 package com.start.quick.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.start.quick.domain.OrderViewModel;
 import com.start.quick.entity.*;
 import com.start.quick.enums.CommonOrderStatus;
 import com.start.quick.enums.YesOrNo;
+import com.start.quick.mapper.OrderMapper;
+import com.start.quick.model.OrderModel;
 import com.start.quick.model.OrderSubmitModel;
 import com.start.quick.repository.OrderItemsRepository;
 import com.start.quick.repository.OrderStatusRepository;
@@ -17,15 +23,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+    private final OrderMapper orderMapper;
 
     private final OrdersRepository ordersRepository;
     private final OrderItemsRepository orderItemsRepository;
@@ -34,7 +39,8 @@ public class OrderServiceImpl implements OrderService {
     private final ItemService itemService;
     private final AddressService addressService;
 
-    public OrderServiceImpl(OrdersRepository ordersRepository, OrderItemsRepository orderItemsRepository, OrderStatusRepository orderStatusRepository, ItemService itemService, AddressService addressService) {
+    public OrderServiceImpl(OrderMapper orderMapper, OrdersRepository ordersRepository, OrderItemsRepository orderItemsRepository, OrderStatusRepository orderStatusRepository, ItemService itemService, AddressService addressService) {
+        this.orderMapper = orderMapper;
         this.ordersRepository = ordersRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.orderStatusRepository = orderStatusRepository;
@@ -147,5 +153,33 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return list;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageInfo<OrderModel> pageAll(String userId, Integer status, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<OrderViewModel> content = this.orderMapper.findAll(userId, status);
+        Page<OrderViewModel> pageInfo = (Page<OrderViewModel>) content;
+
+        Map<String, OrderModel> map = new HashMap<>();
+        for (OrderViewModel item : pageInfo) {
+            OrderModel order = map.get(item.getOrderId());
+            if (order == null) {
+                order = new OrderModel(item.getOrderId(), item.getCreateTime(), item.getPayMethod(), item.getRealPayAmount(), item.getPostAmount(), item.getOrderStatus());
+            }
+            order.getItems().add(new OrderModel.ItemModel(item.getItemId(), item.getItemName(), item.getItemImg(), item.getItemSpecId(), item.getItemSpecName(), item.getBuyCounts(), item.getPrice()));
+            map.put(order.getOrderId(), order);
+        }
+
+        PageInfo<OrderModel> result = new PageInfo<>(new ArrayList<>(map.values()));
+        result.setTotal(pageInfo.getTotal());
+        result.setPageNum(pageInfo.getPageNum());
+        result.setPageSize(pageInfo.getPageSize());
+        result.setPages(pageInfo.getPages());
+        result.setStartRow(pageInfo.getStartRow());
+        result.setEndRow(pageInfo.getEndRow());
+        result.calcByNavigatePages(8);
+        return result;
     }
 }

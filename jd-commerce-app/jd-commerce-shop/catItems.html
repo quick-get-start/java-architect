@@ -266,20 +266,16 @@
                 } else if (searchType == "catItems") {
                     this.searchCatItemsInBackend(this.catId, this.sort, page, this.pageSize);
                 }
-
-
             },
             showItemDetail(itemId) {
                 window.open("item.html?itemId=" + itemId);
             },
             chooseSort(sort) {
-                // console.log(sort);
                 this.sort = sort;
 
                 var searchType = this.searchType;
                 if (searchType == "searchItems") {
                     var keywords = this.keywords;
-                    // console.log(keywords);
                     if (keywords == null || keywords == undefined || keywords == '') {
                         alert("搜索内容不能为空");
                         return;
@@ -298,7 +294,6 @@
             doSearch() {
                 this.searchType = "searchItems"
                 var keywords = this.keywords;
-                // console.log(keywords);
                 if (keywords == null || keywords == undefined || keywords == '') {
                     alert("搜索内容不能为空");
                     return;
@@ -306,7 +301,6 @@
                 this.searchInBackend(keywords, "k", 1, 20);
             },
             searchCatItemsInBackend(catId, sort, page, pageSize) {
-                // debugger;
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
                 axios.get(serverUrl + '/items/searchByCategory?categoryId=' + catId + "&sort=" + sort + "&page=" + page + "&pageSize=" + pageSize, {})
@@ -317,7 +311,7 @@
                             this.itemsList = itemsList;
 
                             var maxPage = grid.pages; // 获得总页数
-                            var total = grid.total; // 获得总记录数
+                            var total = grid.total;   // 获得总记录数
 
                             this.maxPage = maxPage;
                             this.total = total;

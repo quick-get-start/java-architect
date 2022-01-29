@@ -1,10 +1,13 @@
 package com.start.quick.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.start.quick.code.ItemResultCode;
 import com.start.quick.code.OrderResultCode;
 import com.start.quick.common.JSONResult;
 import com.start.quick.entity.OrderStatus;
 import com.start.quick.entity.Orders;
 import com.start.quick.enums.CommonOrderStatus;
+import com.start.quick.model.OrderModel;
 import com.start.quick.model.OrderSubmitModel;
 import com.start.quick.model.WechatPaymentModel;
 import com.start.quick.service.OrderService;
@@ -65,5 +68,25 @@ public class OrdersController {
     public JSONResult<OrderStatus> status(@RequestParam String orderId) {
         OrderStatus result = this.orderService.findOrderStatusByOrderId(orderId);
         return JSONResult.ok("查询订单状态成功", result);
+    }
+
+    @GetMapping("pageAll")
+    public JSONResult<PageInfo<OrderModel>> pageAll(@RequestParam String userId,
+                                          @RequestParam(required = false) Integer status,
+                                          @RequestParam(required = false) Integer page,
+                                          @RequestParam(required = false) Integer pageSize) {
+        if (StringUtils.isBlank(userId)) {
+            return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "用户不存在");
+        }
+
+        if (page == null) {
+            page = 1;
+        }
+        if (pageSize == null) {
+            pageSize = 10;
+        }
+        PageInfo<OrderModel> result = this.orderService.pageAll(userId, status, page, pageSize);
+
+        return JSONResult.ok("订单信息查询成功", result);
     }
 }

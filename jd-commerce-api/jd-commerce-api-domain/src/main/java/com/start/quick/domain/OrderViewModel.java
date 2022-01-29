@@ -1,12 +1,12 @@
 package com.start.quick.domain;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class OrderViewModel {
 
     private String orderId;
 
-    private Calendar createTime;
+    private Date createTime;
 
     private Integer payMethod;
 
@@ -38,11 +38,11 @@ public class OrderViewModel {
         this.orderId = orderId;
     }
 
-    public Calendar getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Calendar createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
