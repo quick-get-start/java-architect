@@ -1,6 +1,6 @@
-package com.start.quick.http;
+package com.start.quick.model;
 
-public class CommentSubmitRequest {
+public class CommentCommonModel {
 
     /**
      * 商品id

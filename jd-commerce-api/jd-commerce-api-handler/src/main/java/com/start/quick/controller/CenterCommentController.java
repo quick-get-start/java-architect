@@ -2,9 +2,8 @@ package com.start.quick.controller;
 
 import com.start.quick.code.CommentResultCode;
 import com.start.quick.common.JSONResult;
-import com.start.quick.entity.ItemsComments;
 import com.start.quick.entity.OrderItems;
-import com.start.quick.http.CommentSubmitRequest;
+import com.start.quick.model.CommentCommonModel;
 import com.start.quick.service.CenterCommentService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +27,15 @@ public class CenterCommentController {
     }
 
     @PostMapping("saveAll")
-    public JSONResult<ItemsComments> saveAll(@RequestParam String userId,
-                                             @RequestBody List<CommentSubmitRequest> data) {
+    public JSONResult<Void> saveAll(@RequestParam String orderId,
+                                             @RequestParam String userId,
+                                             @RequestBody List<CommentCommonModel> data) {
         if (ObjectUtils.isEmpty(data)) {
             return JSONResult.build(CommentResultCode.INVALID_REQUEST_PARAM, "评论内容不能为空");
         }
 
-        return JSONResult.ok("ok", null);
+        this.centerCommentService.saveAll(orderId, userId, data);
+
+        return JSONResult.ok("评论成功!");
     }
 }
