@@ -15,7 +15,8 @@ public class OrderProvider {
                 "    `order`.pay_method as payMethod, " +
                 "    `order`.real_pay_amount as realPayAmount, " +
                 "    `order`.post_amount as postAmount, " +
-                "    `status`.order_status as orderStatus " +
+                "    `status`.order_status as orderStatus, " +
+                "    `order`.is_comment as isComment " +
                 "from orders `order` " +
                 "left join order_status `status` on `status`.order_id = `order`.id " +
                 "where `order`.user_id = #{userId} " +

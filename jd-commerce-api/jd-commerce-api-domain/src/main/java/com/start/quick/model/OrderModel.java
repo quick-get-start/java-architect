@@ -21,6 +21,8 @@ public class OrderModel {
 
     private Integer orderStatus;
 
+    private Integer isComment;
+
     private List<OrderItemModel> items = new ArrayList<>();
 
     public String getOrderId() {
@@ -69,6 +71,14 @@ public class OrderModel {
 
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    public Integer getIsComment() {
+        return isComment;
+    }
+
+    public void setIsComment(Integer isComment) {
+        this.isComment = isComment;
     }
 
     public List<OrderItemModel> getItems() {
