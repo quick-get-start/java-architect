@@ -96,9 +96,9 @@ public class OrdersController {
 
     @GetMapping("pageAll")
     public JSONResult<PageInfo<OrderModel>> pageAll(@RequestParam String userId,
-                                          @RequestParam(required = false) Integer status,
-                                          @RequestParam(required = false) Integer page,
-                                          @RequestParam(required = false) Integer pageSize) {
+                                                    @RequestParam(required = false) Integer status,
+                                                    @RequestParam(required = false) Integer page,
+                                                    @RequestParam(required = false) Integer pageSize) {
         if (StringUtils.isBlank(userId)) {
             return JSONResult.build(ItemResultCode.INVALID_REQUEST_PARAM, "用户不存在");
         }

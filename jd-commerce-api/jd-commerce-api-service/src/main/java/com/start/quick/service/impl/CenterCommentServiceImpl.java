@@ -1,11 +1,15 @@
 package com.start.quick.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.start.quick.entity.ItemsComments;
 import com.start.quick.entity.OrderItems;
 import com.start.quick.entity.OrderStatus;
 import com.start.quick.entity.Orders;
 import com.start.quick.enums.YesOrNo;
+import com.start.quick.mapper.CommentMapper;
 import com.start.quick.model.CommentCommonModel;
+import com.start.quick.model.CommentModel;
 import com.start.quick.repository.ItemsCommentsRepository;
 import com.start.quick.repository.OrderItemsRepository;
 import com.start.quick.service.CenterCommentService;
@@ -22,12 +26,14 @@ import java.util.UUID;
 @Service
 public class CenterCommentServiceImpl implements CenterCommentService {
 
+    private final CommentMapper commentMapper;
     private final OrderItemsRepository orderItemsRepository;
     private final ItemsCommentsRepository itemsCommentsRepository;
 
     private final OrderService orderService;
 
-    public CenterCommentServiceImpl(OrderItemsRepository orderItemsRepository, ItemsCommentsRepository itemsCommentsRepository, OrderService orderService) {
+    public CenterCommentServiceImpl(CommentMapper commentMapper, OrderItemsRepository orderItemsRepository, ItemsCommentsRepository itemsCommentsRepository, OrderService orderService) {
+        this.commentMapper = commentMapper;
         this.orderItemsRepository = orderItemsRepository;
         this.itemsCommentsRepository = itemsCommentsRepository;
         this.orderService = orderService;
@@ -63,5 +69,12 @@ public class CenterCommentServiceImpl implements CenterCommentService {
         OrderStatus orderStatus = this.orderService.findOrderStatusByOrderId(orderId);
         orderStatus.setCommentTime(new Date());
         return comments;
+    }
+
+    @Override
+    public PageInfo<CommentModel> pageAll(String userId, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<CommentModel> content = this.commentMapper.selectAll(userId);
+        return new PageInfo<>(content);
     }
 }
