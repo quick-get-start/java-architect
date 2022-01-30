@@ -221,12 +221,9 @@
             },
             renderCalendar() {
                 var yearMonth = moment(new Date()).format('YYYY年MM月');
-                // console.log(yearMonth);
                 var day = moment(new Date()).format('DD');
-                // console.log(day);
                 var localMoment = moment().locale('zh-cn');
                 var weekDay = localMoment.format('dddd');
-                // console.log(weekDay);
 
                 this.yearMonth = yearMonth;
                 this.day = day;
@@ -236,20 +233,16 @@
                 var userInfo = this.userInfo;
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
-                axios.post(
-                        serverUrl + '/myorders/trend?userId=' + userInfo.id +
-                        "&page=" + page +
-                        "&pageSize=" + pageSize, {}, {
-                            headers: {
-                                'headerUserId': userInfo.id,
-                                'headerUserToken': userInfo.userUniqueToken
-                            }
-                        })
+                axios.get(serverUrl + '/center/trend?userId=' + userInfo.id + "&page=" + page + "&pageSize=" + pageSize, {}, {
+                        headers: {
+                            'headerUserId': userInfo.id,
+                            'headerUserToken': userInfo.userUniqueToken
+                        }
+                    })
                     .then(res => {
-                        if (res.data.status == 200) {
-                            var grid = res.data.data;
-                            var orderTrendList = grid.rows;
-                            // console.log(orderTrendList);
+                        if (res.data.code == 0) {
+                            var pageInfo = res.data.data;
+                            var orderTrendList = pageInfo.list;
                             this.orderTrendList = orderTrendList;
 
                             for (var i = 0; i < orderTrendList.length; i++) {
@@ -267,14 +260,13 @@
                                 orderTrendList[i].successTime = formatedSuccessTime;
                             }
 
-                            var maxPage = grid.total; // 获得总页数
-                            var total = grid.records; // 获得总记录数
+                            var maxPage = pageInfo.pages; // 获得总页数
+                            var total = pageInfo.total; // 获得总记录数
 
                             this.maxPage = maxPage;
                             this.total = total;
                         } else {
                             alert(res.data.msg);
-                            console.log(res.data.msg);
                         }
                     });
             },

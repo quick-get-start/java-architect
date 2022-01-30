@@ -9,6 +9,7 @@ import com.start.quick.mapper.OrderMapper;
 import com.start.quick.model.OrderModel;
 import com.start.quick.model.OrderStatusModel;
 import com.start.quick.model.OrderSubmitModel;
+import com.start.quick.model.OrderTrendModel;
 import com.start.quick.repository.OrderItemsRepository;
 import com.start.quick.repository.OrderStatusRepository;
 import com.start.quick.repository.OrdersRepository;
@@ -192,6 +193,14 @@ public class OrderServiceImpl implements OrderService {
         Integer waitCommentCount = this.orderMapper.countByStatus(userId, CommonOrderStatus.SUCCESS, YesOrNo.NO);
 
         return new OrderStatusModel(waitPayCount, waitDeliverCount, waitReceiveCount, waitCommentCount);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PageInfo<OrderTrendModel> orderTrend(String userId, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<OrderTrendModel> content = this.orderMapper.orderTrend(userId);
+        return new PageInfo<>(content);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
