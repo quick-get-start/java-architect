@@ -50,7 +50,7 @@ public class OrdersController {
         }
 
         this.orderService.updateDeliverStatus(orderId);
-        return JSONResult.ok("支付成功");
+        return JSONResult.ok("发货成功");
     }
 
     @GetMapping("payment/wechat")
@@ -72,6 +72,26 @@ public class OrdersController {
     public JSONResult<OrderStatus> status(@RequestParam String orderId) {
         OrderStatus result = this.orderService.findOrderStatusByOrderId(orderId);
         return JSONResult.ok("查询订单状态成功", result);
+    }
+
+    @PostMapping("confirmReceive")
+    public JSONResult<Void> confirmReceive(@RequestParam String orderId) {
+        if (StringUtils.isBlank(orderId)) {
+            return JSONResult.build(OrderResultCode.INVALID_REQUEST_PARAM, "订单不存在");
+        }
+
+        this.orderService.updateReceiveStatus(orderId);
+        return JSONResult.ok("收货成功");
+    }
+
+    @PostMapping("delete")
+    public JSONResult<Void> delete(@RequestParam String orderId) {
+        if (StringUtils.isBlank(orderId)) {
+            return JSONResult.build(OrderResultCode.INVALID_REQUEST_PARAM, "订单不存在");
+        }
+
+        this.orderService.deleteById(orderId);
+        return JSONResult.ok("删除成功");
     }
 
     @GetMapping("pageAll")

@@ -135,6 +135,15 @@ public class OrderServiceImpl implements OrderService {
         return orderStatus;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public OrderStatus updateReceiveStatus(String orderId) {
+        OrderStatus orderStatus = this.findOrderStatusByOrderId(orderId);
+        orderStatus.setOrderStatus(CommonOrderStatus.SUCCESS);
+        orderStatus.setSuccessTime(new Date());
+        return orderStatus;
+    }
+
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Orders findById(String orderId) {
@@ -171,5 +180,12 @@ public class OrderServiceImpl implements OrderService {
         PageHelper.startPage(page, pageSize);
         List<OrderModel> content = this.orderMapper.findAll(userId, status);
         return new PageInfo<>(content);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteById(String orderId) {
+        Orders order = this.findById(orderId);
+        order.setIsDelete(YesOrNo.YES);
     }
 }

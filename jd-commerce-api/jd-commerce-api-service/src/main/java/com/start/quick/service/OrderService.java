@@ -17,6 +17,8 @@ public interface OrderService {
 
     OrderStatus updateDeliverStatus(String orderId);
 
+    OrderStatus updateReceiveStatus(String orderId);
+
     Orders findById(String orderId);
 
     OrderStatus findOrderStatusByOrderId(String orderId);
@@ -24,4 +26,6 @@ public interface OrderService {
     List<OrderStatus> closeOrders();
 
     PageInfo<OrderModel> pageAll(String userId, Integer status, Integer page, Integer pageSize);
+
+    void deleteById(String orderId);
 }

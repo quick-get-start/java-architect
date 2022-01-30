@@ -250,16 +250,17 @@
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
                 axios.post(
-                        serverUrl + '/myorders/delete?userId=' + userInfo.id + "&orderId=" + orderId, {}, {
+                        serverUrl + '/orders/delete?userId=' + userInfo.id + "&orderId=" + orderId, {}, {
                             headers: {
                                 'headerUserId': userInfo.id,
                                 'headerUserToken': userInfo.userUniqueToken
                             }
                         })
                     .then(res => {
-                        if (res.data.status == 200) {
+                        if (res.data.code == 0) {
+                            alert('订单删除成功!');
                             this.renderOrderList(this.orderStatus, this.page, this.pageSize);
-                        } else if (res.data.status == 500) {
+                        } else {
                             alert(res.data.msg);
                         }
                     });
@@ -299,16 +300,17 @@
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
                 axios.post(
-                        serverUrl + '/myorders/confirmReceive?userId=' + userInfo.id + "&orderId=" + orderId, {}, {
+                        serverUrl + '/orders/confirmReceive?userId=' + userInfo.id + "&orderId=" + orderId, {}, {
                             headers: {
                                 'headerUserId': userInfo.id,
                                 'headerUserToken': userInfo.userUniqueToken
                             }
                         })
                     .then(res => {
-                        if (res.data.status == 200) {
+                        if (res.data.code == 0) {
+                            alert('确认收货成功！');
                             this.renderOrderList(this.orderStatus, this.page, this.pageSize);
-                        } else if (res.data.status == 500) {
+                        } else {
                             alert(res.data.msg);
                         }
                     });
