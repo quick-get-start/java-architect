@@ -11,6 +11,7 @@ public interface OrderMapper {
 
     @SelectProvider(type = OrderProvider.class, method = "findAll")
     @Results({
+            @Result(column = "orderId", property = "orderId"),
             @Result(column = "orderId", property = "items", many = @Many(select = "com.start.quick.mapper.OrderItemMapper.findAllByOrderId"))
     })
     List<OrderModel> findAll(String userId, Integer status);

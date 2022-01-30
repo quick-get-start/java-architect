@@ -137,6 +137,9 @@
                                                                     一键支付
                                                                 </div>
                                                                 <p v-show="order.orderStatus == 20" class="Mystatus">拣货中</p>
+                                                                <div v-show="order.orderStatus == 20" @click="deliver(order.orderId)" class="am-btn am-btn-success anniu">
+                                                                    发货
+                                                                </div>
                                                                 <div v-show="order.orderStatus == 30" @click="confirmReceive(order.orderId)" class="am-btn am-btn-danger anniu">
                                                                     确认收货
                                                                 </div>
@@ -264,6 +267,26 @@
             commentItems(orderId) {
                 window.location.href = "doComment.html?orderId=" + orderId;
             },
+            deliver(orderId) {
+                var userInfo = this.userInfo;
+                // 请求后端获得最新数据
+                var serverUrl = app.serverUrl;
+                axios.defaults.withCredentials = true;
+                axios.post(serverUrl + '/orders/deliver/' + orderId, {}, {
+                        headers: {
+                            'headerUserId': userInfo.id,
+                            'headerUserToken': userInfo.userUniqueToken
+                        }
+                    })
+                    .then(res => {
+                        if (res.data.code == 0) {
+                            alert('发货成功!');
+                            this.renderOrderList(this.orderStatus, this.page, this.pageSize);
+                        } else {
+                            alert(res.data.msg);
+                        }
+                    });
+            },
             confirmReceive(orderId) {
 
                 var confirm = window.confirm("确认收货吗？");
@@ -335,7 +358,7 @@
                             this.myOrderList = myOrderList;
 
                             var maxPage = page.pages; // 获得总页数
-                            var total = page.total;   // 获得总记录数
+                            var total = page.total; // 获得总记录数
 
                             this.maxPage = maxPage;
                             this.total = total;
