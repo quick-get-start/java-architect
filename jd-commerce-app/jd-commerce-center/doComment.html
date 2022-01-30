@@ -143,7 +143,6 @@
         methods: {
             saveComments() {
                 var orderItemList = this.orderItemList;
-                // console.log(orderItemList);
 
                 // 判断每项元素是否有评论等级
                 // 判断每项元素是否包含评论内容
@@ -164,21 +163,17 @@
                 // 请求后端获得最新数据
                 var serverUrl = app.serverUrl;
                 axios.defaults.withCredentials = true;
-                axios.post(
-                        serverUrl + '/mycomments/saveList?userId=' + userInfo.id + "&orderId=" + this.orderId,
-                        orderItemList, {
-                            headers: {
-                                'headerUserId': userInfo.id,
-                                'headerUserToken': userInfo.userUniqueToken
-                            }
-                        })
+                axios.post(serverUrl + '/comment/saveAll?userId=' + userInfo.id + "&orderId=" + this.orderId, orderItemList, {
+                        headers: {
+                            'headerUserId': userInfo.id,
+                            'headerUserToken': userInfo.userUniqueToken
+                        }
+                    })
                     .then(res => {
-                        if (res.data.status == 200) {
-                            // var orderItemList = res.data.data;
-                            // console.log(orderItemList);
+                        if (res.data.code == 0) {
                             alert("评论成功！");
                             window.location.href = "order.html";
-                        } else if (res.data.status == 500) {
+                        } else {
                             alert(res.data.msg);
                         }
                     });
