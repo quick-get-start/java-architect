@@ -7,6 +7,7 @@ import com.start.quick.enums.CommonOrderStatus;
 import com.start.quick.enums.YesOrNo;
 import com.start.quick.mapper.OrderMapper;
 import com.start.quick.model.OrderModel;
+import com.start.quick.model.OrderStatusModel;
 import com.start.quick.model.OrderSubmitModel;
 import com.start.quick.repository.OrderItemsRepository;
 import com.start.quick.repository.OrderStatusRepository;
@@ -180,6 +181,17 @@ public class OrderServiceImpl implements OrderService {
         PageHelper.startPage(page, pageSize);
         List<OrderModel> content = this.orderMapper.findAll(userId, status);
         return new PageInfo<>(content);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public OrderStatusModel countByStatus(String userId) {
+        Integer waitPayCount = this.orderMapper.countByStatus(userId, CommonOrderStatus.WAIT_PAY, null);
+        Integer waitDeliverCount = this.orderMapper.countByStatus(userId, CommonOrderStatus.WAIT_DELIVER, null);
+        Integer waitReceiveCount = this.orderMapper.countByStatus(userId, CommonOrderStatus.WAIT_RECEIVE, null);
+        Integer waitCommentCount = this.orderMapper.countByStatus(userId, CommonOrderStatus.SUCCESS, YesOrNo.NO);
+
+        return new OrderStatusModel(waitPayCount, waitDeliverCount, waitReceiveCount, waitCommentCount);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

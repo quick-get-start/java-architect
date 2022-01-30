@@ -24,4 +24,17 @@ public class OrderProvider {
                 condition +
                 "order by `order`.update_time desc";
     }
+
+    public String countByStatus(String userId, Integer status, Integer isComment) {
+        String condition = "";
+        if (ObjectUtils.isNotEmpty(isComment)) {
+            condition = "and `order`.is_comment = #{isComment} ";
+        }
+        return "select count(1) " +
+                "from orders `order` " +
+                "left join order_status `status` on `order`.id = `status`.order_id " +
+                "where `order`.user_id = #{userId} " +
+                "and `status`.order_status = #{status} " +
+                condition;
+    }
 }

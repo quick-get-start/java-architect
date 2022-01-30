@@ -15,4 +15,7 @@ public interface OrderMapper {
             @Result(column = "orderId", property = "items", many = @Many(select = "com.start.quick.mapper.OrderItemMapper.findAllByOrderId"))
     })
     List<OrderModel> findAll(String userId, Integer status);
+
+    @SelectProvider(type = OrderProvider.class, method = "countByStatus")
+    Integer countByStatus(String userId, Integer status, Integer isComment);
 }
